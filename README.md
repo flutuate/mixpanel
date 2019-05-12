@@ -1,6 +1,6 @@
 # flutuate_mixpanel
 
-A Flutter plugin for MixPanel
+A Flutter plugin for Mixpanel
 
 ## Getting Started
 
