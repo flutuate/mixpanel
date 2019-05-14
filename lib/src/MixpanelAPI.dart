@@ -24,5 +24,25 @@ class MixpanelAPI
       'properties': properties
     });
   }
+  
+  Map<String,String> getDeviceInfo() {
+    return _channel.invokeMethod<Map<String,String>>('getDeviceInfo');
+  }
+  
+  String getDistinctId() {
+    return _channel.invokeMethod<String>('getDistinctId');
+  }
+  
+  void optInTracking() {
+    _channel.invokeMethod<void>('optInTracking');
+  }
+  
+  void optOutTracking() {
+    _channel.invokeMethod<void>('optOutTracking');
+  }
+  
+  void reset() {
+    _channel.invokeMethod<void>('reset');
+  }
 }
 

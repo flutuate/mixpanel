@@ -35,7 +35,13 @@ implements MethodCallHandler
   @Override
   public void onMethodCall(MethodCall call, Result result) {
     if (call.method.equals("getInstance")) {
-      getInstance(call.<String>argument("token"), result);
+	  String token = call.<String>argument("token");
+	  if( call.hasArgument("optOutTrackingDefault") ) {
+		boolean optOutTrackingDefault = call.<boolean>argument("optOutTrackingDefault");
+		getInstance(token, optOutTrackingDefault, result);
+	  }
+	  else
+		getInstance(token, result);
     }
     else if (call.method.equals("flush")) {
       flush(result);
@@ -45,6 +51,21 @@ implements MethodCallHandler
       Map<String, Object> properties = call.<HashMap<String, Object>>argument("properties");
       track(eventName, properties, result);
     }
+	else if(call.method.equals("getDeviceInfo"))  {
+      getDeviceInfo(result);
+	}		
+	else if (call.method.equals("getDistinctId")) {
+      getDistinctId(result);
+	}
+	else if (call.method.equals("optInTracking")) {
+		optInTracking(result);
+	}
+	else if (call.method.equals("optOutTracking")) {
+		optOutTracking(result);
+	}
+	else if (call.method.equals("reset")) {
+		reset(result);
+	}
     else {
       result.notImplemented();
     }
@@ -52,6 +73,11 @@ implements MethodCallHandler
 
   private void getInstance(String token, Result result) {
     mixpanel = MixpanelAPI.getInstance(registrar.context(), token);
+    result.success(mixpanel.hashCode());
+  }
+
+  private void getInstance(String token, boolean optOutTrackingDefault, Result result) {
+    mixpanel = MixpanelAPI.getInstance(registrar.context(), token, optOutTrackingDefault);
     result.success(mixpanel.hashCode());
   }
 
@@ -84,4 +110,29 @@ implements MethodCallHandler
     }
     return jsonObject;
   }
+  
+  private void getDeviceInfo(Result result) {
+    Map<String,String> map = mixpanel.getDeviceInfo();
+    result.success(map);
+  }
+
+  private void getDistinctId(Result result) {
+    result.success(mixpanel.getDistinctId());
+  }
+
+  private void optInTracking(Result result) {
+    mixpanel.optInTracking();
+    result.success(null);
+  }
+
+  private void optOutTracking(Result result) {
+    mixpanel.optOutTracking();
+    result.success(null);
+  }
+
+  private void reset(Result result) {
+    mixpanel.reset();
+    result.success(null);
+  }
+  
 }
