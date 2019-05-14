@@ -7,10 +7,13 @@ class MixpanelAPI
 
   static const MethodChannel _channel = const MethodChannel(_pluginName);
 
-  static Future<MixpanelAPI> getInstance(String token) async {
-    await _channel.invokeMethod<int>('getInstance', <String, dynamic>{
+  static Future<MixpanelAPI> getInstance(String token, [bool optOutTrackingDefault]) async {
+	Map<String, dynamic> properties = <String, dynamic>{
       'token': token
-    });
+    };
+	if( optOutTrackingDefault != null )
+		properties.add('optOutTrackingDefault', optOutTrackingDefault);
+    await _channel.invokeMethod<int>('getInstance', properties);
     return new MixpanelAPI();
   }
 

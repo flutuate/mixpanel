@@ -87,10 +87,11 @@ implements MethodCallHandler
   }
 
   private void track(String eventName, Map<String, Object> properties, Result result) {
-    JSONObject jsonObject;
+    //JSONObject jsonObject;
     try {
-      jsonObject = extractJSONObject(properties);
-      mixpanel.track(eventName, jsonObject);
+      //jsonObject = extractJSONObject(properties);
+      //mixpanel.track(eventName, jsonObject);
+      mixpanel.track(eventName, properties);
     }
     catch (JSONException e) {
       result.error(e.getClass().getName(), e.toString(), "");
@@ -110,7 +111,7 @@ implements MethodCallHandler
     }
     return jsonObject;
   }
-  
+
   private void getDeviceInfo(Result result) {
     Map<String,String> map = mixpanel.getDeviceInfo();
     result.success(map);
