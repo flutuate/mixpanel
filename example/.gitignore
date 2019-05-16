@@ -71,4 +71,5 @@
 
 # Secret keys
 **/resources/secrets/**
+**/resources/secrets.json
 **/**/secrets.json
