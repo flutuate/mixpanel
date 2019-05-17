@@ -12,7 +12,7 @@ class MixpanelAPI
       'token': token
     };
 	if( optOutTrackingDefault != null )
-		properties.add('optOutTrackingDefault', optOutTrackingDefault);
+		properties['optOutTrackingDefault'] = optOutTrackingDefault;
     await _channel.invokeMethod<int>('getInstance', properties);
     return new MixpanelAPI();
   }
@@ -28,12 +28,12 @@ class MixpanelAPI
     });
   }
   
-  Map<String,String> getDeviceInfo() {
-    return _channel.invokeMethod<Map<String,String>>('getDeviceInfo');
+  Future<Map<String, String>> getDeviceInfo() async {
+    return await _channel.invokeMethod<Map<String,String>>('getDeviceInfo');
   }
   
-  String getDistinctId() {
-    return _channel.invokeMethod<String>('getDistinctId');
+  Future<String> getDistinctId() async {
+    return await _channel.invokeMethod<String>('getDistinctId');
   }
   
   void optInTracking() {

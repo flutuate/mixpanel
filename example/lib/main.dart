@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:convert' show json;
 import 'dart:async';
-import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
-import 'package:Secrets.dart';
+
+import 'Secrets.dart';
 
 void main() => runApp(MyApp());
 

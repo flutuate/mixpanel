@@ -1,4 +1,8 @@
-class Secrets 
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
+
+class Secrets
 {
   final String mixpanelToken;
 
