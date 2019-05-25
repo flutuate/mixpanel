@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:convert' show json;
 import 'dart:async';
-import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
+
+import 'Secrets.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,7 +37,7 @@ extends State<MyApp>
 
     //TODO Before run, you must to inform your Mixpanel token in the file 'resources/secrets.json'.
 
-    loadSecrets().then((secrets) {
+    Secrets.load().then((secrets) {
       if( secrets != null ) {
         _mixpanelToken = secrets.mixpanelToken;
         MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
@@ -66,7 +66,7 @@ extends State<MyApp>
                 ? Text('Your Mixpanel Token was not informed')
                 : RaisedButton(
                     child: Text('Press me to track an event'),
-                    onPressed: () => sendLog(),
+                    onPressed: () => trackEvent(),
                   ),
             ],
           )
@@ -75,29 +75,12 @@ extends State<MyApp>
     );
   }
 
-  void sendLog() {
+  void trackEvent() {
     Map<String,String> properties = {
       "Button Pressed": "A button was pressed"
     };
     _mixpanel.track('Flutuate.io Mixpanel Plugin Event', properties );
   }
 
-  Future<_Secrets> loadSecrets() {
-    return rootBundle.loadStructuredData<_Secrets>(
-      'resources/secrets.json', (jsonStr) async {
-        final secrets = _Secrets.fromJson(json.decode(jsonStr));
-        return secrets;
-      }
-    );
-  }
 }
-
-class _Secrets {
-  final String mixpanelToken;
-
-  _Secrets({this.mixpanelToken = ""});
-
-  factory _Secrets.fromJson(Map<String, dynamic> jsonMap) {
-    return new _Secrets(mixpanelToken: jsonMap["mixpanel_token"]);
-  }
-}
+	

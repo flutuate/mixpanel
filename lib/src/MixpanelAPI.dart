@@ -11,13 +11,16 @@ class MixpanelAPI
 
   static Future<MixpanelAPI> getInstance(String token, {bool mocked=false}) async {
     if( mocked) {
+  static Future<MixpanelAPI> getInstance(String token, [bool optOutTrackingDefault]) async {
+	Map<String, dynamic> properties = <String, dynamic>{
       return new MixpanelMockedAPI();
     }
 
-    await _channel.invokeMethod<int>('getInstance', <String, dynamic>{
       'token': token
-    });
-
+    };
+	if( optOutTrackingDefault != null )
+		properties['optOutTrackingDefault'] = optOutTrackingDefault;
+    await _channel.invokeMethod<int>('getInstance', properties);
     return new MixpanelAPI();
   }
 
@@ -30,6 +33,26 @@ class MixpanelAPI
       'eventName': eventName,
       'properties': properties
     });
+  }
+  
+  Future<Map<String, String>> getDeviceInfo() async {
+    return await _channel.invokeMethod<Map<String,String>>('getDeviceInfo');
+  }
+  
+  Future<String> getDistinctId() async {
+    return await _channel.invokeMethod<String>('getDistinctId');
+  }
+  
+  void optInTracking() {
+    _channel.invokeMethod<void>('optInTracking');
+  }
+  
+  void optOutTracking() {
+    _channel.invokeMethod<void>('optOutTracking');
+  }
+  
+  void reset() {
+    _channel.invokeMethod<void>('reset');
   }
 }
 
