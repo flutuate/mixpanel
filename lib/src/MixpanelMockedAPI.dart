@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'package:flutter/services.dart';
-
 import 'MixpanelAPI.dart';
 
 class MixpanelMockedAPI

@@ -16,3 +16,4 @@ doc/api/
 **/resources/secrets/**
 **/resources/secrets.json
 **/**/secrets.json
+/.idea/workspace.xml
