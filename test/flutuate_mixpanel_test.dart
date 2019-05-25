@@ -8,7 +8,7 @@ void main()
   MixpanelAPI mixpanel;
 
   setUp(() async {
-    mixpanel = await MixpanelAPI.getInstance(token);
+    mixpanel = await MixpanelAPI.getInstance(token, mocked: true);
   });
 
   tearDown(() async {
