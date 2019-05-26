@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import 'package:flutuate_mixpanel/Secrets.dart';
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
-
-import 'Secrets.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,7 +34,7 @@ extends State<MyApp>
     // setState to update our non-existent appearance.
     if (!mounted) return;
 
-    //TODO Before run, you must to inform your Mixpanel token in the file 'resources/secrets.json'.
+    /// ATTENTION: Before run, you must to inform your Mixpanel token in the file 'resources/secrets.json'.
 
     Secrets.load().then((secrets) {
       if( secrets != null ) {
@@ -51,6 +50,26 @@ extends State<MyApp>
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> buttons;
+    if( _mixpanelToken == null || _mixpanelToken.trim().length == 0) {
+      buttons = [ Text('Your Mixpanel Token was not informed')];
+    }
+    else {
+      buttons = [
+        RaisedButton(
+            child: Text('Press me to track an event'),
+            onPressed: () => trackEvent() )
+        ,
+        RaisedButton(
+            child: Text('Press me to get device info'),
+            onPressed: () => getDeviceInfo() )
+        ,
+        RaisedButton(
+            child: Text('Press me to get distinct id'),
+            onPressed: () => getDistinctId() )
+      ];
+    }
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -59,16 +78,7 @@ extends State<MyApp>
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>
-            [
-              //(_mixpanelToken == null || _mixpanelToken.trim().length == 0)
-              (_mixpanelToken != null && _mixpanelToken.trim().length > 0)
-                ? Text('Your Mixpanel Token was not informed')
-                : RaisedButton(
-                    child: Text('Press me to track an event'),
-                    onPressed: () => trackEvent(),
-                  ),
-            ],
+            children: buttons,
           )
         ),
       ),
@@ -82,5 +92,14 @@ extends State<MyApp>
     _mixpanel.track('Flutuate.io Mixpanel Plugin Event', properties );
   }
 
+  void getDeviceInfo() async {
+    Map<String,String> devInfo = await _mixpanel.getDeviceInfo();
+    print( devInfo );
+  }
+
+  void getDistinctId() async {
+    String distinctId = await _mixpanel.getDistinctId();
+    print( distinctId );
+  }
 }
 	

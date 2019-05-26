@@ -15,5 +15,8 @@ doc/api/
 
 **/resources/secrets/**
 **/resources/secrets.json
+**/test/resources/secrets/**
+**/test/resources/secrets.json
 **/**/secrets.json
+
 /.idea/workspace.xml

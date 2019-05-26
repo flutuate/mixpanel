@@ -38,7 +38,12 @@ class MixpanelAPI
   }
   
   Future<Map<String, String>> getDeviceInfo() async {
-    return await _channel.invokeMethod<Map<String,String>>('getDeviceInfo');
+    Map result = await _channel.invokeMethod<Map>('getDeviceInfo');
+    Map<String, String> devInfo = {};
+    for( dynamic key in result.keys ) {
+      devInfo[key as String] = result[key] as String;
+    }
+    return devInfo;
   }
   
   Future<String> getDistinctId() async {

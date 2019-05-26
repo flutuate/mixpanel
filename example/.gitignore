@@ -72,4 +72,6 @@
 # Secret keys
 **/resources/secrets/**
 **/resources/secrets.json
+**/test/resources/secrets/**
+**/test/resources/secrets.json
 **/**/secrets.json

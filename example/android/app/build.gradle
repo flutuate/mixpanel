@@ -55,8 +55,8 @@ flutter {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13-beta-3'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-   implementation 'com.mixpanel.android:mixpanel-android:5.+'
+   implementation 'com.mixpanel.android:mixpanel-android:5.6.1'
 }
