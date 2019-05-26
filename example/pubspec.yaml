@@ -1,6 +1,6 @@
 name: flutuate_mixpanel_example
 description: Demonstrates how to use the flutuate_mixpanel plugin.
-publish_to: 'https://pub.dev/packages/flutuate_mixpanel'
+publish_to: 'none'
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
