@@ -1,6 +1,6 @@
 name: flutuate_mixpanel
-description: A Flutter plugin for Mixpanel
-version: 0.1.0
+description: A Flutter plugin for use the Mixpanel API for Android devices.
+version: 0.1.1
 author: Luciano Rodrigues <flutuate.io@gmail.com>
 homepage: https://github.com/flutuate/mixpanel
 

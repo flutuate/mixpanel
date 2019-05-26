@@ -1,8 +1,6 @@
 import 'MixpanelAPI.dart';
 
-class MixpanelMockedAPI
-extends MixpanelAPI
-{
+class MixpanelMockedAPI extends MixpanelAPI {
   @override
   void flush() {
     // Do nothing.
@@ -15,16 +13,16 @@ extends MixpanelAPI
 
   @override
   Future<Map<String, String>> getDeviceInfo() {
-    return Future<Map<String,String>>.value( <String,String> {
-      '\$android_os':'Android',
-      '\$android_os_version':'5.0.2',
-      '\$android_brand':'generic_x86_64',
-      '\$android_model':'Android SDK built for x86_64',
-      '\$android_app_version':'1.0',
+    return Future<Map<String, String>>.value(<String, String>{
+      '\$android_os': 'Android',
+      '\$android_os_version': '5.0.2',
+      '\$android_brand': 'generic_x86_64',
+      '\$android_model': 'Android SDK built for x86_64',
+      '\$android_app_version': '1.0',
       '\$android_app_version_code': '1',
       '\$android_lib_version': '5.6.1',
       '\$android_manufacturer': 'unknown'
-    } );
+    });
   }
 
   @override
@@ -47,4 +45,3 @@ extends MixpanelAPI
     // Do nothing.
   }
 }
-
