@@ -61,6 +61,9 @@ implements MethodCallHandler
 	else if (call.method.equals("reset")) {
 		reset(result);
 	}
+    else if (call.method.equals("identify")) {
+        identify(call, result);
+    }
     else {
       result.notImplemented();
     }
@@ -77,7 +80,7 @@ implements MethodCallHandler
         result.success(mixpanel.hashCode());
     }
 
-  private void flush(Result result) {
+    private void flush(Result result) {
     mixpanel.flush();
     result.success(null);
   }
@@ -106,7 +109,7 @@ implements MethodCallHandler
         result.success(null);
     }
 
-  private JSONObject extractJSONObject(Map<String, Object> properties) throws JSONException {
+    private JSONObject extractJSONObject(Map<String, Object> properties) throws JSONException {
     JSONObject jsonObject = new JSONObject();
     for (String key : properties.keySet()) {
       Object value = properties.get(key);
@@ -118,28 +121,33 @@ implements MethodCallHandler
     return jsonObject;
   }
 
-  private void getDeviceInfo(Result result) {
+    private void getDeviceInfo(Result result) {
     Map<String,String> map = mixpanel.getDeviceInfo();
     result.success(map);
   }
 
-  private void getDistinctId(Result result) {
+    private void getDistinctId(Result result) {
     result.success(mixpanel.getDistinctId());
   }
 
-  private void optInTracking(Result result) {
+    private void optInTracking(Result result) {
     mixpanel.optInTracking();
     result.success(null);
   }
 
-  private void optOutTracking(Result result) {
+    private void optOutTracking(Result result) {
     mixpanel.optOutTracking();
     result.success(null);
   }
 
-  private void reset(Result result) {
+    private void reset(Result result) {
     mixpanel.reset();
     result.success(null);
   }
-  
+
+    private void identify(MethodCall call, Result result) {
+        String distinctId = call.<String>argument("distinctId");
+        mixpanel.identify(distinctId);
+        result.success(null);
+    }
 }

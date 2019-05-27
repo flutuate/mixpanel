@@ -7,7 +7,7 @@ class MixpanelMockedAPI extends MixpanelAPI {
   }
 
   @override
-  void track(String eventName, Map<String, dynamic> properties) {
+  void track(String eventName, [Map<String, dynamic> properties]) {
     print('$runtimeType.track: {$eventName=$properties}');
   }
 

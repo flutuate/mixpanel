@@ -3,6 +3,17 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
+///
+/// A convenience class to read Mixpanel secret token from a resource file.
+///
+/// The resource file must be the name 'secrets.json' at folder 'resources', and
+/// it must be the follow format:
+///
+/// ```json
+/// {
+///    "mixpanel_token": "<your-mixpanel-token>"
+/// }
+/// ```
 class Secrets {
   final String mixpanelToken;
 
@@ -12,6 +23,9 @@ class Secrets {
     return new Secrets(mixpanelToken: jsonMap['mixpanel_token']);
   }
 
+  ///
+  /// Load the 'resources/secret.json' file that contains the json with the
+  /// Mixpanel token. The method returns an instance of [Secrets].
   static Future<Secrets> load({bool inUnitTest = false}) {
     if (inUnitTest) {
       return loadFromFile();
