@@ -32,4 +32,3 @@ class Secrets {
     return Future<Secrets>.value(Secrets._fromJson(map));
   }
 }
-

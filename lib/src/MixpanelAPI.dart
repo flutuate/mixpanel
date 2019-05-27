@@ -3,11 +3,29 @@ import 'package:flutter/services.dart';
 
 import 'MixpanelMockedAPI.dart';
 
+///
+/// Core class for interacting with Mixpanel Analytics.
+///
+/// See native [MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
+/// for more information.
+///
 class MixpanelAPI {
   static const String _pluginName = 'flutuate.io/plugins/mixpanel';
 
   static const MethodChannel _channel = const MethodChannel(_pluginName);
 
+  ///
+  /// Get the instance of native MixpanelAPI associated with your Mixpanel project
+  /// [token].
+  ///
+  /// Use [getInstance] to get a reference to a shared instance of MixpanelAPI
+  /// you can use to send events to Mixpanel.
+  ///
+  /// The [optOutTrackingDefault] parameters, determines whether or not Mixpanel
+  /// can start tracking by default. See [optOutTracking].
+  ///
+  /// If you need test your application, set [mocked] as ```true```. See [MixpanelMockedAPI].
+  ///
   static Future<MixpanelAPI> getInstance(String token,
       {bool optOutTrackingDefault, mocked = false}) async {
     if (mocked) {
