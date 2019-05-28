@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutuate_mixpanel/src/Secrets.dart';
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 
 void main() => runApp(MyApp());
