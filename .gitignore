@@ -5,6 +5,10 @@
 .pub/
 
 .idea/
+/.idea/
+/.idea/workspace.xml
+
+*.iml
 
 build/
 pubspec.lock
@@ -19,4 +23,3 @@ doc/api/
 **/test/resources/secrets.json
 **/**/secrets.json
 
-/.idea/workspace.xml

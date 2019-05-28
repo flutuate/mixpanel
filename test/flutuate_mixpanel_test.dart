@@ -1,4 +1,4 @@
-import 'package:flutuate_mixpanel/Secrets.dart';
+import 'package:flutuate_mixpanel/src/Secrets.dart';
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 import 'package:test/test.dart';
 
