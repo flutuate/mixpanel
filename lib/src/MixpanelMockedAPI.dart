@@ -6,11 +6,9 @@ import 'MixpanelAPI.dart';
 /// See [Mixpanel] wrapper and [native MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
 /// for more information.
 class MixpanelMockedAPI extends MixpanelAPI {
-
   /// Do nothing.
   @override
-  void flush() {
-  }
+  void flush() {}
 
   /// Prints to console the [eventName] and [properties].
   @override
@@ -41,21 +39,17 @@ class MixpanelMockedAPI extends MixpanelAPI {
 
   /// Do nothing.
   @override
-  void identify(String distinctId) {
-  }
+  void identify(String distinctId) {}
 
   /// Do nothing.
   @override
-  void optInTracking() {
-  }
+  void optInTracking() {}
 
   /// Do nothing.
   @override
-  void optOutTracking() {
-  }
+  void optOutTracking() {}
 
   /// Do nothing.
   @override
-  void reset() {
-  }
+  void reset() {}
 }
