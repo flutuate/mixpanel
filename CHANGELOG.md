@@ -1,3 +1,7 @@
+## 0.1.4
+
+* Solved deprecations warnings in Java code.
+
 ## 0.1.3
 
 * Added API documentation.
