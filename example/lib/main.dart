@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'dart:io' show Platform;
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 
 void main() => runApp(MyApp());
@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-
+/*
     /// ATTENTION: Before run, you must to inform your Mixpanel token in the file 'resources/secrets.json'.
 
     Secrets.load().then((secrets) {
@@ -39,7 +39,17 @@ class _MyAppState extends State<MyApp> {
           });
         });
       }
+    });*/
+    
+    /// ATTENTION: Before run, you must to inform your Mixpanel token in environment variable called 'mixpanel_token'.
+    var envVars = Platform.environment;
+    _mixpanelToken = envVars['mixpanel_token'];
+    MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
+      setState(() {
+        _mixpanel = mixpanel;
+      });
     });
+
   }
 
   @override

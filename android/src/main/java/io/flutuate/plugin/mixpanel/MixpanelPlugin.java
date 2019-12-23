@@ -1,10 +1,10 @@
 package io.flutuate.plugin.mixpanel;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
-
+import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,25 +16,44 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class MixpanelPlugin
-        implements MethodCallHandler
+implements FlutterPlugin, MethodCallHandler
 {
-    private static final String name = "flutuate.io/plugins/mixpanel";
+    private static final String name = "flutuate_mixpanel";
     private static final Map<String, Object> EMPTY_HASHMAP = new HashMap<>();
 
     private final PluginRegistry.Registrar registrar;
     private MixpanelAPI mixpanel;
 
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutuate_mixpanel");
+    channel.setMethodCallHandler(new FlutuateMixpanelPlugin());
+  }
+
+  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
+  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
+  // plugin registration via this function while apps migrate to use the new Android APIs
+  // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
+  //
+  // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
+  // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
+  // depending on the user's project. onAttachedToEngine or registerWith must both be defined
+  // in the same class.
     public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), MixpanelPlugin.name);
         channel.setMethodCallHandler(new MixpanelPlugin(registrar));
     }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+  }
 
     private MixpanelPlugin(PluginRegistry.Registrar registrar) {
         this.registrar = registrar;
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
+  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
             case "getInstance":
                 getInstance(call, result);
@@ -77,8 +96,9 @@ public class MixpanelPlugin
         if (call.hasArgument("optOutTrackingDefault")) {
             Boolean optOutTrackingDefault = call.<Boolean>argument("optOutTrackingDefault");
             mixpanel = MixpanelAPI.getInstance(registrar.context(), token, optOutTrackingDefault == null ? false : optOutTrackingDefault);
-        } else
+        } else {
             mixpanel = MixpanelAPI.getInstance(registrar.context(), token);
+		}
         result.success(mixpanel.hashCode());
     }
 
