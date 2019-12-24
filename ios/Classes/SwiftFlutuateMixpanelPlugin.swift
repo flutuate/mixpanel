@@ -9,7 +9,7 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  public func handle(call: FlutterMethodCall, result: @escaping FlutterResult) {
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     result("iOS " + UIDevice.current.systemVersion)
 		switch call.method {
 			case "getInstance":
