@@ -16,7 +16,7 @@ A Flutter plugin for use the Mixpanel API for Android devices.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
 # s.dependency 'Mixpanel'
-  s.libraries 'Mixpanel'
+  s.libraries = 'Mixpanel'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
