@@ -1,5 +1,5 @@
-group 'io.flutuate.plugin.mixpanel'
-version '1.0-SNAPSHOT'
+group 'io.flutuate.flutuate_mixpanel'
+version '1.0'
 
 buildscript {
     repositories {
