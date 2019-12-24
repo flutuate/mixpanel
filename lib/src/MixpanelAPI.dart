@@ -13,6 +13,10 @@ class MixpanelAPI {
 
   static const MethodChannel _channel = const MethodChannel(_pluginName);
 
+  final String instanceId;
+
+  MixpanelAPI(this.instanceId);
+
   ///
   /// Get the instance of native MixpanelAPI associated with your Mixpanel project
   /// [token].
@@ -32,9 +36,10 @@ class MixpanelAPI {
     if (optOutTrackingDefault != null)
       properties['optOutTrackingDefault'] = optOutTrackingDefault;
 
-    await _channel.invokeMethod<int>('getInstance', properties);
+    String name = await _channel.invokeMethod<String>(
+        'getInstance', properties);
 
-    return new MixpanelAPI();
+    return new MixpanelAPI(name);
   }
 
   ///

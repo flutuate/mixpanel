@@ -48,25 +48,24 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
 	return	
   }
 	
-  typealias invalidMixpanelToken = Error
-	
 //http://online.swiftplayground.run/
 //https://developer.mixpanel.com/docs/swift
 //https://api.flutter.dev/objcdoc/Classes/FlutterMethodChannel.html
 //https://stackoverflow.com/questions/50078947/how-to-implement-a-flutterplugins-method-handler-in-swift
 //https://stackoverflow.com/questions/57664458/how-to-use-passed-parameters-in-swift-setmethodcallhandler-self-methodnamere
-  private func getInstance(call: FlutterMethodCall, result: @escaping FlutterResult) {  
-	if let arguments = call.arguments as? [String: Any] {
-        if let token = arguments["token"] as? [String] {
+  private func getInstance(call: FlutterMethodCall, result: @escaping FlutterResult)
+  {
+    var instance: MixpanelInstance;
+    if let arguments = call.arguments as? [String:Any] {
+        if let token = arguments["token"] as? String {
 			if let optOutTrackingDefault = arguments["optOutTrackingDefault"] as? Bool {
-				Mixpanel.initialize(token: token, optOutTrackingByDefault: optOutTrackingDefault)
+				instance = Mixpanel.initialize(token: token, optOutTrackingByDefault: optOutTrackingDefault)
 			} else {
-				Mixpanel.initialize(token: token)
-			} 
-			return
+				instance = Mixpanel.initialize(token: token)
+			}
+            return result(instance.name)
 		}
-	}
-	throw invalidToken;
+    }
   }
   
   private func flush(result: @escaping FlutterResult) {
@@ -74,23 +73,24 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
   }
   
   private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
-	let arguments = call.arguments as? Dictionary<String, Any>
-    let eventName = arguments["eventName"] as? String
-	let properties = arguments["properties"] as? Dictionary<String, Any>
-	Mixpanel.mainInstance().track( eventName: eventName, properties: properties);
+    let arguments = call.arguments as? [String:Any]
+    let eventName = arguments?["eventName"] as? String
+    let properties = arguments?["properties"] as? Properties
+	Mixpanel.mainInstance().track( event: eventName, properties: properties);
   }
   
   private func trackMap(call: FlutterMethodCall, result: @escaping FlutterResult) {
-	self?.track(call: call, result: result)
+    track(call: call, result: result)
   }  
   
   private func getDeviceInfo(result: @escaping FlutterResult) {
-    let map = Mixpanel.mainInstance().getDeviceInfo() as? Dictionary<String, String>
+    //TODO verify is exists// let map = Mixpanel.mainInstance().getDeviceInfo() as? Dictionary<String, String>
+    let map : [String:String] = [:]
     result(map);
   }  
   
   private func getDistinctId(result: @escaping FlutterResult) {
-    result(Mixpanel.mainInstance().getDistinctId());
+    result(Mixpanel.mainInstance().distinctId);
   }
   
   private func optInTracking(result: @escaping FlutterResult) {
@@ -102,12 +102,12 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
   }
   
   private func reset(result: @escaping FlutterResult) {
-		Mixpanel.mainInstance().reset()
+    Mixpanel.mainInstance().reset()
   }
 
   private func identify(call: FlutterMethodCall, result: @escaping FlutterResult) {
-		let arguments = call.arguments as? Dictionary<String, Any>
-    let distinctId = arguments["distinctId"] as? String
-    mixpanel.identify(distinctId);
+    let arguments = call.arguments as? [String : Any]
+    let distinctId = (arguments?["distinctId"] as? String)!
+    Mixpanel.mainInstance().identify(distinctId: distinctId);
   }	
 }

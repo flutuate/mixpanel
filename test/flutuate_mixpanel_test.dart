@@ -10,7 +10,7 @@ void main()
 
   MixpanelAPI _mixpanel;
 
-  TestWidgetsFlutterBinding.ensureInitialized();
+  //TestWidgetsFlutterBinding.ensureInitialized();
   
   setUpAll(() async {
 /*
