@@ -1,0 +1,101 @@
+import Foundation
+
+public typealias FlutterResult = (Array<Any>?, Error?) -> Void
+
+public class FlutterMethodNotImplemented : NSObject {}
+
+public class FlutterMethodCall: NSObject {
+    var method: String = "";
+    var arguments: Dictionary<String, Any> = [:];
+}
+
+public class SwiftFlutuateMixpanelPlugin: NSObject {
+
+  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+    	switch call.method {
+			case "getInstance":
+				self.getInstance(call: call, result: result)
+				break
+			case "flush":
+				self.flush(result: result)
+				break
+			case "track":
+				self.track(call: call, result: result)
+				break
+			case "trackMap":
+				self.trackMap(call: call, result: result)
+				break
+			case "getDeviceInfo":
+				self.getDeviceInfo(result: result)
+				break
+			case "getDistinctId":
+				self.getDistinctId(result: result)
+				break
+			case "optInTracking":
+				self.optInTracking(result: result)
+				break
+			case "optOutTracking":
+				self.optOutTracking(result: result)
+				break
+			case "reset":
+				self.reset(result: result)
+				break
+			case "identify":
+				self.identify(call: call, result: result)
+				break
+            default:
+                break
+		}
+		return	
+  }
+
+  typealias invalidMixpanelToken = Error
+	
+  private func getInstance(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	if let arguments = call.arguments as? [String: Any] {
+        if let token = arguments["token"] as? [String] {
+			if let optOutTrackingDefault = arguments["optOutTrackingDefault"] as? Bool {
+				Mixpanel.initialize(token: token, optOutTrackingByDefault: optOutTrackingDefault)
+			} else {
+				Mixpanel.initialize(token: token)
+			} 
+			return
+		}
+	}
+	throw invalidToken;
+  }
+  
+  private func flush(result: @escaping FlutterResult) {
+    
+  }
+  
+  private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	let arguments = call.arguments as? Dictionary<String, Any>
+    let eventName = arguments["eventName"] as? String
+	let properties = arguments["properties"] as? Dictionary<String, Any>	
+  }
+  
+  private func trackMap(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	self?.track(call: call, result: result)
+  }  
+  
+  private func getDeviceInfo(result: @escaping FlutterResult) {
+  }  
+  
+  private func getDistinctId(result: @escaping FlutterResult) {
+  }
+  
+  private func optInTracking(result: @escaping FlutterResult) {
+  }
+  
+  private func optOutTracking(result: @escaping FlutterResult) {
+  }
+  
+  private func reset(result: @escaping FlutterResult) {
+  }
+
+  private func identify(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	let arguments = call.arguments as? Dictionary<String, Any>
+    let distinctId = arguments["distinctId"] as? String
+  }	
+}
