@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
 A Flutter plugin for use the Mixpanel API for Android devices.
                        DESC
   s.homepage         = 'https://github.com/flutuate/mixpanel'
-  s.license          = { :file => '../../LICENSE' }
+  s.license          = { :file => '../LICENSE' }
   s.author           = { 'Luciano Rodrigues' => 'flutuate.io@gmail.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
