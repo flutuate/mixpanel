@@ -15,7 +15,7 @@ A Flutter plugin for use the Mixpanel API for Android devices.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Mixpanel'
+  s.dependency 'Mixpanel-swift', '~> 2.6.2'
 #  s.libraries = 'Mixpanel'
   s.platform = :ios, '8.0'
 

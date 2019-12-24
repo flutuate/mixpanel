@@ -9,38 +9,38 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  public func handle(call: FlutterMethodCall, result: @escaping FlutterResult) {
     result("iOS " + UIDevice.current.systemVersion)
-		switch call.method! {
+		switch call.method {
 			case "getInstance":
-				self?.getInstance(call: call, result: result)
+				self.getInstance(call: call, result: result)
 				break
 			case "flush":
-				self?.flush(result: result)
+				self.flush(result: result)
 				break
 			case "track":
-				self?.track(call: call, result: result)
+				self.track(call: call, result: result)
 				break
 			case "trackMap":
-				self?.trackMap(call: call, result: result)
+				self.trackMap(call: call, result: result)
 				break
 			case "getDeviceInfo":
-				self?.getDeviceInfo(result: result)
+				self.getDeviceInfo(result: result)
 				break
 			case "getDistinctId":
-				self?.getDistinctId(result: result)
+				self.getDistinctId(result: result)
 				break
 			case "optInTracking":
-				self?.optInTracking(result: result)
+				self.optInTracking(result: result)
 				break
 			case "optOutTracking":
-				self?.optOutTracking(result: result)
+				self.optOutTracking(result: result)
 				break
 			case "reset":
-				self?.reset(result: result)
+				self.reset(result: result)
 				break
 			case "identify":
-				self?.identify(call: call, result: result)
+				self.identify(call: call, result: result)
 				break
 			default:
 				result(FlutterMethodNotImplemented)
@@ -52,29 +52,29 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
 //https://api.flutter.dev/objcdoc/Classes/FlutterMethodChannel.html
 //https://stackoverflow.com/questions/50078947/how-to-implement-a-flutterplugins-method-handler-in-swift
 //https://stackoverflow.com/questions/57664458/how-to-use-passed-parameters-in-swift-setmethodcallhandler-self-methodnamere
-  private func getInstance(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-		let arguments = call.arguments as? Dictionary<String, Any>
-    let token = arguments["token"] as? String
-		if let optOutTrackingDefault = arguments["optOutTrackingDefault"] as? Bool {
-			Mixpanel.initialize(token: token, optOutTrackingByDefault: optOutTrackingDefault)
-		} else {
-			Mixpanel.initialize(token: token)
-		} 
+  private func getInstance(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	let arguments = call.arguments as? Dictionary<String, Any>
+    let token = arguments["token"] as? [String: Any]
+	if let optOutTrackingDefault = arguments["optOutTrackingDefault"] as? Bool {
+		Mixpanel.initialize(token: token, optOutTrackingByDefault: optOutTrackingDefault)
+	} else {
+		Mixpanel.initialize(token: token)
+	} 
   }
   
   private func flush(result: @escaping FlutterResult) {
     Mixpanel.mainInstance().flush()
   }
   
-  private func track(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-		let arguments = call.arguments as? Dictionary<String, Any>
+  private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	let arguments = call.arguments as? Dictionary<String, Any>
     let eventName = arguments["eventName"] as? String
-		let properties = arguments["properties"] as? Dictionary<String, Any>
-		Mixpanel.mainInstance().track( eventName: eventName, properties: properties);
+	let properties = arguments["properties"] as? Dictionary<String, Any>
+	Mixpanel.mainInstance().track( eventName: eventName, properties: properties);
   }
   
-  private func trackMap(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-		self?.track(call: call, result: result)
+  private func trackMap(call: FlutterMethodCall, result: @escaping FlutterResult) {
+	self?.track(call: call, result: result)
   }  
   
   private func getDeviceInfo(result: @escaping FlutterResult) {
@@ -98,7 +98,7 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
 		Mixpanel.mainInstance().reset()
   }
 
-  private func identify(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  private func identify(call: FlutterMethodCall, result: @escaping FlutterResult) {
 		let arguments = call.arguments as? Dictionary<String, Any>
     let distinctId = arguments["distinctId"] as? String
     mixpanel.identify(distinctId);
