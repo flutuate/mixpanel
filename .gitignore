@@ -7,8 +7,6 @@
 .idea/
 .idea/libraries/
 
-*.iml
-
 build/
 pubspec.lock
 **/Podfile.lock
@@ -23,3 +21,4 @@ doc/api/
 **/test/resources/secrets.json
 **/**/secrets.json
 
+*.iml

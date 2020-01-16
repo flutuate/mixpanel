@@ -1,6 +1,7 @@
 package io.flutuate.flutuate_mixpanel;
 
 import com.mixpanel.android.mpmetrics.MixpanelAPI;
+import android.content.Context;
 import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,12 +22,15 @@ implements FlutterPlugin, MethodCallHandler
     private static final String name = "flutuate_mixpanel";
     private static final Map<String, Object> EMPTY_HASHMAP = new HashMap<>();
 
-    private final PluginRegistry.Registrar registrar;
+    private Context context;
     private MixpanelAPI mixpanel;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutuate_mixpanel");
+    //final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutuate_mixpanel");
+    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutuate_mixpanel");
+
+		context = flutterPluginBinding.getApplicationContext();
     channel.setMethodCallHandler(new FlutuateMixpanelPlugin());
   }
 
@@ -40,19 +44,22 @@ implements FlutterPlugin, MethodCallHandler
   // depending on the user's project. onAttachedToEngine or registerWith must both be defined
   // in the same class.
   public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), MixpanelPlugin.name);
-    channel.setMethodCallHandler(new FlutuateMixpanelPlugin(registrar));
+        final MethodChannel channel = new MethodChannel(registrar.messenger(), FlutuateMixpanelPlugin.name);
+        channel.setMethodCallHandler(new FlutuateMixpanelPlugin(registrar.context()));
   }
+
+	public FlutuateMixpanelPlugin() 
+	{}
+
+	public FlutuateMixpanelPlugin(Context context) {
+		this.context = context;
+	}
 
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
   }
 
-    private FlutuateMixpanelPlugin(PluginRegistry.Registrar registrar) {
-        this.registrar = registrar;
-    }
-
-    @Override
+  @Override
   public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
             case "getInstance":
@@ -95,9 +102,9 @@ implements FlutterPlugin, MethodCallHandler
         String token = call.argument("token");
         if (call.hasArgument("optOutTrackingDefault")) {
             Boolean optOutTrackingDefault = call.<Boolean>argument("optOutTrackingDefault");
-            mixpanel = MixpanelAPI.getInstance(registrar.context(), token, optOutTrackingDefault == null ? false : optOutTrackingDefault);
+            mixpanel = MixpanelAPI.getInstance(context, token, optOutTrackingDefault == null ? false : optOutTrackingDefault);
         } else {
-            mixpanel = MixpanelAPI.getInstance(registrar.context(), token);
+            mixpanel = MixpanelAPI.getInstance(context, token);
 		}
         result.success(mixpanel.hashCode());
     }
