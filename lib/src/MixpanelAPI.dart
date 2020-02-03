@@ -36,8 +36,8 @@ class MixpanelAPI {
     if (optOutTrackingDefault != null)
       properties['optOutTrackingDefault'] = optOutTrackingDefault;
 
-    String name = await _channel.invokeMethod<String>(
-        'getInstance', properties);
+    String name =
+        await _channel.invokeMethod<String>('getInstance', properties);
 
     return new MixpanelAPI(name);
   }
