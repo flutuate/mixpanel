@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Implemented to iOS.
+
 ## 0.1.4
 
 * Solved deprecations warnings in Java code.
