@@ -2,8 +2,8 @@
 A Flutter plugin for [Mixpanel](https://www.mixpanel.com).
 
 ## Getting Started
-First, you must be registered at [Mixpanel](https://mixpanel.com/login/) to use the Mixpanel API.
-The plugin uses the same concept of method calls used by the Mixpanel Android library.
+This plugin wraps the most of the functions from [Mixpanel SDK](https://developer.mixpanel.com/docs). It runs on both Android and iOS.
+To use it, you must have a registered token from [Mixpanel](https://mixpanel.com/login/).
 
 ## Configuration
 Add `flutuate_mixpanel` to `pubspec.yaml` under the `dependencies` field.
