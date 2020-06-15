@@ -27,6 +27,7 @@
 .pub-cache/
 .pub/
 build/
+example/.flutter-plugins-dependencies
 
 # Directory created by dartdoc
 # If you don't generate documentation locally you can remove this line.
@@ -54,6 +55,8 @@ doc/api/
 **/ios/Flutter/Generated.xcconfig
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
+**/ios/Flutter/Flutter.podspec
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
