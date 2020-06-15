@@ -1,3 +1,4 @@
+import 'package:flutter_test/flutter_test.dart' as flutterTest;
 import 'package:flutuate_mixpanel/src/Secrets.dart';
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 import 'package:test/test.dart';
@@ -10,9 +11,13 @@ void main()
 
   MixpanelAPI _mixpanel;
 
-  //TestWidgetsFlutterBinding.ensureInitialized();
+  flutterTest.TestWidgetsFlutterBinding.ensureInitialized();
   
   setUpAll(() async {
+  /*channel.setMockMethodCallHandler((MethodCall methodCall) async {
+      return '42';
+    });
+  */
 /*
     Secrets.load(inUnitTest: true)
       .then((secrets) {
@@ -27,7 +32,7 @@ void main()
     /// ATTENTION: Before run, you must to inform your Mixpanel token in environment variable called 'mixpanel_token'.
     var envVars = Platform.environment;
     _mixpanelToken = envVars['mixpanel_token'];
-    MixpanelAPI.getInstance(_mixpanelToken, mocked:true).then((mixpanel) {
+    MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
       _mixpanel = mixpanel;
     });
 

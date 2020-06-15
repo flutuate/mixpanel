@@ -4,7 +4,8 @@ import Mixpanel
 
 public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutuate_mixpanel", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "flutuate_mixpanel",
+        binaryMessenger: registrar.messenger())
     let instance = SwiftFlutuateMixpanelPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }

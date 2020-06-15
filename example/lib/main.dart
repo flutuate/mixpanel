@@ -3,7 +3,9 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override

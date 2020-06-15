@@ -1,19 +1,22 @@
 package io.flutuate.flutuate_mixpanel;
 
-import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
+
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
+
 import org.json.JSONException;
 import org.json.JSONObject;
-import io.flutter.embedding.engine.plugins.FlutterPlugin;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class FlutuateMixpanelPlugin
@@ -22,45 +25,46 @@ implements FlutterPlugin, MethodCallHandler
     private static final String name = "flutuate_mixpanel";
     private static final Map<String, Object> EMPTY_HASHMAP = new HashMap<>();
 
+    private MethodChannel channel;
     private Context context;
     private MixpanelAPI mixpanel;
 
-  @Override
-  public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
-    //final MethodChannel channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), "flutuate_mixpanel");
-    final MethodChannel channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), "flutuate_mixpanel");
-
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        //channel = new MethodChannel(flutterPluginBinding.getFlutterEngine().getDartExecutor(), FlutuateMixpanelPlugin.name);
+        channel = new MethodChannel(flutterPluginBinding.getBinaryMessenger(), FlutuateMixpanelPlugin.name);
 		context = flutterPluginBinding.getApplicationContext();
-    channel.setMethodCallHandler(new FlutuateMixpanelPlugin());
-  }
+        channel.setMethodCallHandler(this);
+    }
 
-  // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-  // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-  // plugin registration via this function while apps migrate to use the new Android APIs
-  // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
-  //
-  // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-  // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-  // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-  // in the same class.
-  public static void registerWith(Registrar registrar) {
+    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
+    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
+    // plugin registration via this function while apps migrate to use the new Android APIs
+    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
+    //
+    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
+    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
+    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
+    // in the same class.
+    public static void registerWith(Registrar registrar) {
         final MethodChannel channel = new MethodChannel(registrar.messenger(), FlutuateMixpanelPlugin.name);
         channel.setMethodCallHandler(new FlutuateMixpanelPlugin(registrar.context()));
-  }
+    }
 
 	public FlutuateMixpanelPlugin() 
 	{}
 
 	public FlutuateMixpanelPlugin(Context context) {
-		this.context = context;
+        this.context = context;
 	}
 
-  @Override
-  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-  }
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        channel.setMethodCallHandler(null);
+    }
 
-  @Override
-  public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+    @Override
+    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
             case "getInstance":
                 getInstance(call, result);
@@ -99,14 +103,18 @@ implements FlutterPlugin, MethodCallHandler
     }
 
     private void getInstance(MethodCall call, Result result) {
-        String token = call.argument("token");
+        final String token = call.argument("token");
+        if( token == null ) {
+            throw new RuntimeException("Your Mixpanel Token was not informed");
+        }
+
         if (call.hasArgument("optOutTrackingDefault")) {
             Boolean optOutTrackingDefault = call.<Boolean>argument("optOutTrackingDefault");
             mixpanel = MixpanelAPI.getInstance(context, token, optOutTrackingDefault == null ? false : optOutTrackingDefault);
         } else {
             mixpanel = MixpanelAPI.getInstance(context, token);
 		}
-        result.success(mixpanel.hashCode());
+        result.success(Integer.toString(mixpanel.hashCode()));
     }
 
     private void flush(Result result) {

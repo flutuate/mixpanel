@@ -1,15 +1,14 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
 
-import 'MixpanelMockedAPI.dart';
-
 ///
 /// Core class for interacting with Mixpanel Analytics.
 ///
 /// See native [MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
 /// for more information.
 class MixpanelAPI {
-  static const String _pluginName = 'flutuate.io/plugins/mixpanel';
+  
+  static const String _pluginName = 'flutuate_mixpanel';
 
   static const MethodChannel _channel = const MethodChannel(_pluginName);
 
@@ -26,10 +25,7 @@ class MixpanelAPI {
   /// See native [Mixpanel.getInstance](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getInstance-android.content.Context-java.lang.String-boolean-)
   /// for more information.
   static Future<MixpanelAPI> getInstance(String token,
-      {bool optOutTrackingDefault, mocked = false}) async {
-    if (mocked) {
-      return new MixpanelMockedAPI();
-    }
+      {bool optOutTrackingDefault}) async {
 
     Map<String, dynamic> properties = <String, dynamic>{'token': token};
 
