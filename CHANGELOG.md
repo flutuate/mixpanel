@@ -1,3 +1,12 @@
+## 1.1.0
+
+* Corrections applied to OS implementation.
+
+## 1.0.1
+
+* Adjust example/README.md
+* Sources formatted
+
 ## 1.0.0
 
 * Implemented to iOS.

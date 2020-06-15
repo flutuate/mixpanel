@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         });
       }
     });*/
-    
+
     /// ATTENTION: Before run, you must to inform your Mixpanel token in environment variable called 'mixpanel_token'.
     var envVars = Platform.environment;
     _mixpanelToken = envVars['mixpanel_token'];
@@ -51,7 +51,6 @@ class _MyAppState extends State<MyApp> {
         _mixpanel = mixpanel;
       });
     });
-
   }
 
   @override
