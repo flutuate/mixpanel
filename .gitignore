@@ -67,4 +67,3 @@ doc/api/
 **/test/resources/secrets/**
 **/test/resources/secrets.json
 **/**/secrets.json
-

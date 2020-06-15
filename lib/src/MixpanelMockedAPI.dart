@@ -6,6 +6,8 @@ import 'MixpanelAPI.dart';
 /// See [Mixpanel] wrapper and [native MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
 /// for more information.
 class MixpanelMockedAPI extends MixpanelAPI {
+  MixpanelMockedAPI() : super(null);
+
   /// Do nothing.
   @override
   void flush() {}

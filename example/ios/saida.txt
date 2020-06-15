@@ -1,0 +1,14 @@
+[x] Automatically assigning platform `iOS` with version `8.0` on target `Runner` because no platform was specified. Please specify a platform for this target in your Podfile. See `https://guides.cocoapods.org/syntax/podfile.html#platform`.
+
+[x] A license was specified in podspec `flutuate_mixpanel` but the file does not exist - /Users/luciano/Documents/projects/mixpanel/example/ios/.symlinks/plugins/LICENSE
+
+[x] Unable to read the license file `../../LICENSE` for the spec `flutuate_mixpanel (0.1.4)`
+
+[x] Unable to read the license file `../../LICENSE` for the spec `flutuate_mixpanel (0.1.4)`
+
+[!] CocoaPods did not set the base configuration of your project because your project already has a custom config set. 
+	In order for CocoaPods integration to work at all, please either set the base configurations 
+	of the target `Runner` to `Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig` 
+	or include the `Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig` 
+	in your build configuration (`Flutter/Release.xcconfig`).
+
