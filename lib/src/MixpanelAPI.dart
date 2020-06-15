@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 /// See native [MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
 /// for more information.
 class MixpanelAPI {
-  
   static const String _pluginName = 'flutuate_mixpanel';
 
   static const MethodChannel _channel = const MethodChannel(_pluginName);
@@ -26,7 +25,6 @@ class MixpanelAPI {
   /// for more information.
   static Future<MixpanelAPI> getInstance(String token,
       {bool optOutTrackingDefault}) async {
-
     Map<String, dynamic> properties = <String, dynamic>{'token': token};
 
     if (optOutTrackingDefault != null)
