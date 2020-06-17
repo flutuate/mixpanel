@@ -67,3 +67,5 @@ doc/api/
 **/test/resources/secrets/**
 **/test/resources/secrets.json
 **/**/secrets.json
+.idea/libraries/Dart_SDK.xml
+.idea/modules.xml

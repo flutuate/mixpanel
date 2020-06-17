@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Update Mixpanel-swift dependency version.
+
 ## 1.1.0
 
 * Corrections applied to OS implementation.
