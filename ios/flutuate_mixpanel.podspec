@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutuate_mixpanel'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'A Flutter plugin for use the Mixpanel API for Android devices.'
   s.description      = <<-DESC
 A Flutter plugin for use the Mixpanel API for Android devices.
@@ -15,7 +15,7 @@ A Flutter plugin for use the Mixpanel API for Android devices.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'Mixpanel-swift', '~> 2.6.2'
+  s.dependency 'Mixpanel-swift', '2.6.2'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
