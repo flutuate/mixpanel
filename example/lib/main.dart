@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:io' show Platform;
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 
-void main() {
-  runApp(MyApp());
+/// Set your Mixpanel token here before run the example app.
+const YOUR_MIXPANEL_TOKEN = null;
+
+void main(List<String> args) {
+  String mixpanelToken = args.isNotEmpty ? args[0] : YOUR_MIXPANEL_TOKEN;
+
+  print(mixpanelToken);
+  runApp(MyApp(mixpanelToken));
 }
 
 class MyApp extends StatefulWidget {
+  final String _mixpanelToken;
+
+  MyApp(this._mixpanelToken);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState(_mixpanelToken);
 }
 
 class _MyAppState extends State<MyApp> {
   MixpanelAPI _mixpanel;
-
   String _mixpanelToken;
+  String _resultMessage = '';
+
+  _MyAppState(this._mixpanelToken);
 
   @override
   void initState() {
@@ -23,81 +34,124 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
-/*
-    /// ATTENTION: Before run, you must to inform your Mixpanel token in the file 'resources/secrets.json'.
-
-    Secrets.load().then((secrets) {
-      if (secrets != null) {
-        _mixpanelToken = secrets.mixpanelToken;
-        MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
-          setState(() {
-            _mixpanel = mixpanel;
-          });
-        });
-      }
-    });*/
-
-    /// ATTENTION: Before run, you must to inform your Mixpanel token in environment variable called 'mixpanel_token'.
-    var envVars = Platform.environment;
-    _mixpanelToken = envVars['mixpanel_token'];
-    MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
-      setState(() {
-        _mixpanel = mixpanel;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> buttons;
+    List<Widget> content;
     if (_mixpanelToken == null || _mixpanelToken.trim().length == 0) {
-      buttons = [Text('Your Mixpanel Token was not informed')];
-    } else {
-      buttons = [
-        RaisedButton(
-            child: Text('Press me to track an event'),
-            onPressed: () => trackEvent()),
-        RaisedButton(
-            child: Text('Press me to get device info'),
-            onPressed: () => getDeviceInfo()),
-        RaisedButton(
-            child: Text('Press me to get distinct id'),
-            onPressed: () => getDistinctId())
-      ];
+      content = [Text('Your Mixpanel Token was not informed')];
     }
-
+    else {
+      content = createButtons(context);
+    }
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Flutuate.io Mixpanel Plugin Example App'),
+          title: const Text('Flutuate.io Mixpanel Plugin Example'),
         ),
         body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: buttons,
-        )),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                _resultMessage,
+                key: Key('resultMessage'),
+              ),
+              Column(
+                children: content,
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+
+  List<Widget> createButtons(BuildContext context) {
+    return [
+      button_getInstance(context),
+      button_trackEvent(context),
+      button_getDeviceInfo(context),
+      button_getDistinctId(context),
+      button_flush(context),
+    ];
+  }
+
+  Widget button_getInstance(BuildContext context) =>
+      RaisedButton(
+          key: Key('getInstance'),
+          child: Text('Get an instance of Mixpanel plugin'),
+          onPressed: () => getInstance()
+      );
+
+  Widget button_trackEvent(BuildContext context) =>
+    RaisedButton(
+      key: Key('trackEvent'),
+      child: Text('Track an event'),
+      onPressed: () => trackEvent()
+    );
+
+  Widget button_getDeviceInfo(BuildContext context) =>
+    RaisedButton(
+        key: Key('getDeviceInfo'),
+        child: Text('Get device info'),
+        onPressed: () => getDeviceInfo()
+    );
+
+  Widget button_getDistinctId(BuildContext context) =>
+      RaisedButton(
+          key: Key('getDistinctId'),
+          child: Text('Get distinct id'),
+          onPressed: () => getDistinctId()
+      );
+
+  Widget button_flush(BuildContext context) =>
+      RaisedButton(
+          key: Key('flush'),
+          child: Text('Flush'),
+          onPressed: () => flush()
+      );
+
+  void getInstance() {
+    MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
+      _mixpanel = mixpanel;
+      setState(() {
+        _resultMessage = 'Instance created with success!';
+      });
+    });
   }
 
   void trackEvent() {
     Map<String, String> properties = {"Button Pressed": "A button was pressed"};
     _mixpanel.track('Flutuate.io Mixpanel Plugin Event', properties);
+    setState(() {
+      _resultMessage = 'Event sent with success!';
+    });
   }
 
   void getDeviceInfo() async {
     Map<String, String> devInfo = await _mixpanel.getDeviceInfo();
     print(devInfo);
+    setState(() {
+      _resultMessage = devInfo.toString();
+    });
   }
 
   void getDistinctId() async {
     String distinctId = await _mixpanel.getDistinctId();
     print(distinctId);
+    setState(() {
+      _resultMessage = distinctId;
+    });
+  }
+
+  void flush() {
+    _mixpanel.flush();
+    setState(() {
+      _resultMessage = 'Flushed with success!';
+    });
   }
 }

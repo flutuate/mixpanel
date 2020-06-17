@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart' as flutterTest;
-import 'package:flutuate_mixpanel/src/Secrets.dart';
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 import 'package:test/test.dart';
 import 'dart:io' show Platform;

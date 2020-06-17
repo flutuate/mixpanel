@@ -12,8 +12,12 @@ import 'package:flutuate_mixpanel_example/main.dart';
 void main() {
   testWidgets('Verify widget has three button or message about missing token',
       (WidgetTester tester) async {
+
+    // Add your Mixpanel token here.
+    final String mixpanelToken = null;
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(MyApp(mixpanelToken));
 
     // Verify that platform version is retrieved.
     expect(
