@@ -72,43 +72,43 @@ class _MyAppState extends State<MyApp> {
 
   List<Widget> createButtons(BuildContext context) {
     return [
-      button_getInstance(context),
-      button_trackEvent(context),
-      button_getDeviceInfo(context),
-      button_getDistinctId(context),
-      button_flush(context),
+      buttonGetInstance(context),
+      buttonTrackEvent(context),
+      buttonGetDeviceInfo(context),
+      buttonGetDistinctId(context),
+      buttonFlush(context),
     ];
   }
 
-  Widget button_getInstance(BuildContext context) =>
+  Widget buttonGetInstance(BuildContext context) =>
       RaisedButton(
           key: Key('getInstance'),
           child: Text('Get an instance of Mixpanel plugin'),
           onPressed: () => getInstance()
       );
 
-  Widget button_trackEvent(BuildContext context) =>
+  Widget buttonTrackEvent(BuildContext context) =>
     RaisedButton(
       key: Key('trackEvent'),
       child: Text('Track an event'),
       onPressed: () => trackEvent()
     );
 
-  Widget button_getDeviceInfo(BuildContext context) =>
+  Widget buttonGetDeviceInfo(BuildContext context) =>
     RaisedButton(
         key: Key('getDeviceInfo'),
         child: Text('Get device info'),
         onPressed: () => getDeviceInfo()
     );
 
-  Widget button_getDistinctId(BuildContext context) =>
+  Widget buttonGetDistinctId(BuildContext context) =>
       RaisedButton(
           key: Key('getDistinctId'),
           child: Text('Get distinct id'),
           onPressed: () => getDistinctId()
       );
 
-  Widget button_flush(BuildContext context) =>
+  Widget buttonFlush(BuildContext context) =>
       RaisedButton(
           key: Key('flush'),
           child: Text('Flush'),
