@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/services.dart';
 
 ///
@@ -87,7 +88,7 @@ class MixpanelAPI {
   /// See native [Mixpanel.identify](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#identify-java.lang.String-)
   /// for more information.
   void identify(String distinctId) {
-    _channel.invokeMethod<void>('identify');
+    _channel.invokeMethod<void>('identify', {'distinctId': distinctId});
   }
 
   ///
