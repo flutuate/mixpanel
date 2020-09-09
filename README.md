@@ -27,7 +27,7 @@ For you to use the plugin, in your Flutter app, get an instance of Mixpanel plug
 ```dart
     MixpanelAPI instance = await MixpanelAPI.getInstance('<your_mixpanel_token');
 ```
-So after, you only call the API methods specified in [Mixpanel Android API documentation](http://mixpanel.github.io/mixpanel-android/index.html).
+So after, you only call the API methods specified in [Mixpanel Android API documentation](https://github.com/mixpanel/mixpanel-android).
 
 See also the [Mixpanel documentation](https://developer.mixpanel.com/docs/android) for more informations.
 

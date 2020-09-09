@@ -1,3 +1,7 @@
+## 1.1.2
+
+* Now sending distinctId in identify().
+
 ## 1.1.1
 
 * Update Mixpanel-swift dependency version.
