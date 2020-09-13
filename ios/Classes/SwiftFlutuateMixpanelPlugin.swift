@@ -76,7 +76,7 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
   private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
     let arguments = call.arguments as? [String:Any]
     let eventName = arguments?["eventName"] as? String
-    let properties = arguments?["properties"] as? Properties
+    let properties = arguments?["properties"] as? [String:String]
 	Mixpanel.mainInstance().track( event: eventName, properties: properties);
   }
   
