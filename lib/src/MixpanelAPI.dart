@@ -58,6 +58,19 @@ class MixpanelAPI {
   }
 
   ///
+  /// set identified properties.
+  ///
+  /// See native [Mixpanel.track](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#track-java.lang.String-org.json.JSONObject-)
+  /// and [Mixpanel.trackMap](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#trackMap-java.lang.String-java.util.Map-)
+  /// for more information.
+  void setUserProperties([Map<String, dynamic> properties]) {
+    try {
+      _channel.invokeMethod<void>('setIdentifiedProperties',
+          <String, dynamic>{'properties': properties});
+    } catch (e) {}
+  }
+
+  ///
   /// Returns an unmodifiable map that contains the device description properties that will be sent to Mixpanel.
   ///
   /// See native [Mixpanel.getDeviceInfo](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getDeviceInfo--)
