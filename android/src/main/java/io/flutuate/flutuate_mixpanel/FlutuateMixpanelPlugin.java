@@ -150,7 +150,7 @@ implements FlutterPlugin, MethodCallHandler
 
     private void setIdentifiedProperties(MethodCall call, Result result) {
         Map<String, Object> properties = call.<HashMap<String, Object>>argument("properties");
-        mixpanel.getPeople().set(properties);
+        mixpanel.getPeople().setMap(properties);
         result.success(null);
     }
 
