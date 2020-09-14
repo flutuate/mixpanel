@@ -76,7 +76,7 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
   private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
     let arguments = call.arguments as? [String:Any]
     let eventName = arguments?["eventName"] as? String
-    let properties = arguments?["properties"] as? [String:String]
+    let properties = getPropertiesFrom(data: arguments?["properties"])
 	Mixpanel.mainInstance().track( event: eventName, properties: properties);
   }
   
@@ -110,5 +110,20 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
     let arguments = call.arguments as? [String : Any]
     let distinctId = (arguments?["distinctId"] as? String)!
     Mixpanel.mainInstance().identify(distinctId: distinctId);
-  }	
+  }
+    
+  private func getPropertiesFrom(data: Any?) -> [String:MixpanelType]? {
+    if data is [String:String] {
+        return data as? [String:String]
+    } else if data is [String:Int] {
+        return data as? [String:Int]
+    } else if data is [String:Bool] {
+        return data as? [String:Bool]
+    } else if data is [String:Double] {
+        return data as? [String:Double]
+    } else if data is [String:Float] {
+        return data as? [String:Float]
+    }
+    return data as? [String : MixpanelType]
+  }
 }
