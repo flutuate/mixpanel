@@ -76,9 +76,51 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
   private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
     let arguments = call.arguments as? [String:Any]
     let eventName = arguments?["eventName"] as? String
-    let properties = arguments?["properties"] as? [String:String]
-	Mixpanel.mainInstance().track( event: eventName, properties: properties);
+    let properties = arguments?["properties"] as? [String: Any]
+    let mappedProperties = mapDictionary(properties: properties)
+    Mixpanel.mainInstance().track( event: eventName, properties: mappedProperties);
   }
+
+  private func mapDictionary(properties: [String: Any]?) -> Properties? {
+      guard let properties = properties else { return nil }
+      return properties.compactMapValues { property -> MixpanelType? in
+          return map(property: property)
+      }
+    }
+
+    private func mapArray(properties: [Any]?) -> MixpanelType? {
+      guard let properties = properties else { return nil }
+      return properties.compactMap { property -> MixpanelType? in
+          return map(property: property)
+      }
+    }
+
+    private func map(property: Any) -> MixpanelType? {
+      if let property = property as? String {
+          return property as MixpanelType
+      } else if let property = property as? Int {
+          return property as MixpanelType
+      } else if let property = property as? UInt {
+          return property as MixpanelType
+      } else if let property = property as? Double {
+          return property as MixpanelType
+      } else if let property = property as? Float {
+          return property as MixpanelType
+      } else if let property = property as? Bool {
+          return property as MixpanelType
+      } else if let property = property as? Date {
+          return property as MixpanelType
+      } else if let property = property as? URL {
+          return property as MixpanelType
+      } else if let property = property as? NSNull {
+          return property as MixpanelType
+      } else if let arrayProperties = property as? [Any] {
+          return mapArray(properties: arrayProperties)
+      } else if let dictProperties = property as? [String: Any] {
+          return mapDictionary(properties: dictProperties)
+      }
+      return nil
+    }
   
   private func trackMap(call: FlutterMethodCall, result: @escaping FlutterResult) {
     track(call: call, result: result)
