@@ -96,6 +96,9 @@ implements FlutterPlugin, MethodCallHandler
             case "identify":
                 identify(call, result);
                 break;
+            case "setIdentifiedProperties":
+                setIdentifiedProperties(call, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -145,6 +148,12 @@ implements FlutterPlugin, MethodCallHandler
         result.success(null);
     }
 
+    private void setIdentifiedProperties(MethodCall call, Result result) {
+        Map<String, Object> properties = call.<HashMap<String, Object>>argument("properties");
+        mixpanel.getPeople().setMap(properties);
+        result.success(null);
+    }
+
     @SuppressWarnings("unchecked")
     private JSONObject extractJSONObject(Map<String, Object> properties) throws JSONException {
         JSONObject jsonObject = new JSONObject();
@@ -187,6 +196,7 @@ implements FlutterPlugin, MethodCallHandler
     private void identify(MethodCall call, Result result) {
         String distinctId = call.argument("distinctId");
         mixpanel.identify(distinctId);
+        mixpanel.getPeople().identify(distinctId);
         result.success(null);
     }
 }
