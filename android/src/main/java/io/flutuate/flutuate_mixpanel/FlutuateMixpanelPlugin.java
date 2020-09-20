@@ -149,8 +149,16 @@ implements FlutterPlugin, MethodCallHandler
     }
 
     private void setIdentifiedProperties(MethodCall call, Result result) {
-        Map<String, Object> properties = call.<HashMap<String, Object>>argument("properties");
-        mixpanel.getPeople().setMap(properties);
+        Map<String, Object> mapProperties = call.<HashMap<String, Object>>argument("properties");
+        JSONObject properties;
+        try {
+            properties = extractJSONObject(mapProperties == null ? EMPTY_HASHMAP : mapProperties);
+            mixpanel.getPeople().set(properties);
+    
+        } catch (JSONException e) {
+            result.error(e.getClass().getName(), e.toString(), "");
+            return;
+        }
         result.success(null);
     }
 
