@@ -1,7 +1,7 @@
     import Flutter
     import UIKit
     import Mixpanel
-    
+
     public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
         public static func register(with registrar: FlutterPluginRegistrar) {
             let channel = FlutterMethodChannel(name: "flutuate_mixpanel",
@@ -9,7 +9,7 @@
             let instance = SwiftFlutuateMixpanelPlugin()
             registrar.addMethodCallDelegate(instance, channel: channel)
         }
-        
+
         public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
             switch call.method {
             case "getInstance":
@@ -44,13 +44,13 @@
                 break
             case "people":
                 self.handlePeopleApi(call: call, result: result)
-                
+
             default:
                 result(FlutterMethodNotImplemented)
             }
             return
         }
-        
+
         //http://online.swiftplayground.run/
         //https://developer.mixpanel.com/docs/swift
         //https://api.flutter.dev/objcdoc/Classes/FlutterMethodChannel.html
@@ -71,11 +71,11 @@
                 }
             }
         }
-        
+
         private func flush(result: @escaping FlutterResult) {
             Mixpanel.mainInstance().flush()
         }
-        
+
         private func track(call: FlutterMethodCall, result: @escaping FlutterResult) {
             let arguments = call.arguments as? [String:Any]
             let eventName = arguments?["eventName"] as? String
@@ -83,21 +83,21 @@
             let mappedProperties = mapDictionary(properties: properties)
             Mixpanel.mainInstance().track( event: eventName, properties: mappedProperties);
         }
-        
+
         private func mapDictionary(properties: [String: Any]?) -> Properties? {
             guard let properties = properties else { return nil }
             return properties.compactMapValues { property -> MixpanelType? in
                 return map(property: property)
             }
         }
-        
+
         private func mapArray(properties: [Any]?) -> MixpanelType? {
             guard let properties = properties else { return nil }
             return properties.compactMap { property -> MixpanelType? in
                 return map(property: property)
             }
         }
-        
+
         private func map(property: Any) -> MixpanelType? {
             if let property = property as? String {
                 return property as MixpanelType
@@ -124,48 +124,48 @@
             }
             return nil
         }
-        
+
         private func trackMap(call: FlutterMethodCall, result: @escaping FlutterResult) {
             track(call: call, result: result)
         }
-        
+
         private func getDeviceInfo(result: @escaping FlutterResult) {
             //TODO verify is exists// let map = Mixpanel.mainInstance().getDeviceInfo() as? Dictionary<String, String>
             let map : [String:String] = [:]
             result(map);
         }
-        
+
         private func getDistinctId(result: @escaping FlutterResult) {
             result(Mixpanel.mainInstance().distinctId);
         }
-        
+
         private func optInTracking(result: @escaping FlutterResult) {
             Mixpanel.mainInstance().optInTracking()
         }
-        
+
         private func optOutTracking(result: @escaping FlutterResult) {
             Mixpanel.mainInstance().optOutTracking()
         }
-        
+
         private func reset(result: @escaping FlutterResult) {
             Mixpanel.mainInstance().reset()
         }
-        
+
         private func identify(call: FlutterMethodCall, result: @escaping FlutterResult) {
             let arguments = call.arguments as? [String : Any]
             let distinctId = (arguments?["distinctId"] as? String)!
             Mixpanel.mainInstance().identify(distinctId: distinctId);
         }
-        
+
         // MARK: People API
-        
+
         private func handlePeopleApi(call: FlutterMethodCall, result: @escaping  FlutterResult) {
             let arguments = call.arguments as? [String:Any]
             let peopleMethod = arguments?["method"] as? String
             let peopleArguments = arguments?["params"] as? [String: Any]
-            
+
             guard peopleMethod != nil else {return}
-            
+
             switch peopleMethod {
             case "addPushDeviceToken":
                 self.addPushToken(arguments: peopleArguments)
@@ -207,12 +207,12 @@
             case "deleteUser":
                 Mixpanel.mainInstance().people.deleteUser()
             default: break
-                
+
             }
-            
+
             result(nil)
         }
-        
+
         private func trackCharges(arguments:[String: Any]?) {
             var properties: Properties? = nil
             if let arguments = arguments {
@@ -224,17 +224,17 @@
                 }
             }
         }
-        
+
         private func incrementBy(arguments:[String: Any]?) {
             if let arguments = arguments,
                 let property = arguments["property"] as? String,
                 let by = arguments["by"] as? Double {
-                
+
                 Mixpanel.mainInstance().people.increment(property: property, by: by)
             }
         }
-        
-        
+
+
         private func addPushToken(arguments: [String: Any]?) {
             if let arguments = arguments,
                 let token = arguments["token"] as? String,
@@ -242,7 +242,7 @@
                 Mixpanel.mainInstance().people.addPushDeviceToken(data)
             }
         }
-        
+
         private func removePushToken(arguments: [String: Any]?) {
             if let arguments = arguments,
                 let token = arguments["token"] as? String,
@@ -250,7 +250,7 @@
                 Mixpanel.mainInstance().people.removePushDeviceToken(data)
             }
         }
-        
+
         private func toMixpanelProperties(properties: [String: Any]?,  execute: (Properties) -> ()) {
             if let properties = properties, let mixPanelProperties = mapDictionary(properties: properties) {
                 execute(mixPanelProperties)
