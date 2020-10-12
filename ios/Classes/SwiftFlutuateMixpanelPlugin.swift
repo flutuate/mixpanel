@@ -11,8 +11,6 @@
         }
         
         public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-            //result("iOS " + UIDevice.current.systemVersion)
-            print("\(call.arguments) == \(call.method)")
             switch call.method {
             case "getInstance":
                 self.getInstance(call: call, result: result)
@@ -211,7 +209,7 @@
             default: break
                 
             }
-        
+            
             result(nil)
         }
         
