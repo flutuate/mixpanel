@@ -160,9 +160,7 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
    
       let arguments = call.arguments as? [String:Any]
       let properties = arguments?["properties"] as? [String: Any]
-      let mappedProperties = mapDictionary(properties: properties)
-      if (mappedProperties != nil)  {
-        Mixpanel.mainInstance().people.set(properties:mappedProperties);
-      }
+      let mappedProperties = mapDictionary(properties: properties)!
+      Mixpanel.mainInstance().people.set(properties:mappedProperties);
     }
 }
