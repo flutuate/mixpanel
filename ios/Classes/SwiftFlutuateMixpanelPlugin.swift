@@ -157,7 +157,8 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
     Mixpanel.mainInstance().identify(distinctId: distinctId);
   }
     private func setIdentifiedProperties(call: FlutterMethodCall, result: @escaping FlutterResult) {
-      let arguments = call.arguments as? [String : Any]
+   
+      let arguments = call.arguments as? [String:Any]
       let properties = arguments?["properties"] as? [String: Any]
       let mappedProperties = mapDictionary(properties: properties)
       Mixpanel.mainInstance().people.set(properties:mappedProperties)
