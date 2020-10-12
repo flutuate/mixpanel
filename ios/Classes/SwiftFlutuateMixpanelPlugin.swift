@@ -42,9 +42,6 @@
             case "identify":
                 self.identify(call: call, result: result)
                 break
-             case "setIdentifiedProperties":
-                self.setIdentifiedProperties(call, result)
-                break
             case "people":
                 self.handlePeopleApi(call: call, result: result)
                 break
@@ -159,17 +156,8 @@
             let distinctId = (arguments?["distinctId"] as? String)!
             Mixpanel.mainInstance().identify(distinctId: distinctId);
         }
-
-        private func setIdentifiedProperties(call: FlutterMethodCall, result: @escaping FlutterResult) {
-              let arguments = call.arguments as? [String : Any
-            ]
-              let properties = arguments?[
-              "properties"
-            ] as? [String: Any
-            ]
-              Mixpanel.mainInstance().people.set(properties:properties)
-          }
-
+        
+        
         // MARK: People API
 
         private func handlePeopleApi(call: FlutterMethodCall, result: @escaping  FlutterResult) {
