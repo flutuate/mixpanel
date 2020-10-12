@@ -12,6 +12,7 @@
         
         public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
             //result("iOS " + UIDevice.current.systemVersion)
+            print("\(call.arguments) == \(call.method)")
             switch call.method {
             case "getInstance":
                 self.getInstance(call: call, result: result)
@@ -67,6 +68,7 @@
                     } else {
                         instance = Mixpanel.initialize(token: token)
                     }
+                    Mixpanel.mainInstance().loggingEnabled = true
                     return result(instance.name)
                 }
             }
