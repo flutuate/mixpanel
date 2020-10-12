@@ -84,8 +84,8 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
     Mixpanel.mainInstance().track( event: eventName, properties: mappedProperties);
   }
 
-  private func mapDictionary(properties: [String: Any]?) -> Properties? {
-      guard let properties = properties else { return nil }
+  private func mapDictionary(properties: [String: Any]) -> Properties {
+      guard let properties = properties else { return [:] }
       return properties.compactMapValues { property -> MixpanelType? in
           return map(property: property)
       }
@@ -160,7 +160,8 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
    
       let arguments = call.arguments as? [String:Any]
       let properties = arguments?["properties"] as? [String: Any]
+      print("properties: " + properties)
       guard let mappedProperties = mapDictionary(properties: properties) else { return }
-      Mixpanel.mainInstance().people.set(properties:mappedProperties);
+      Mixpanel.mainInstance().people.set(properties: mappedProperties);
     }
 }
