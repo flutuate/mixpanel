@@ -44,7 +44,7 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
 			self.identify(call: call, result: result)
 			break
     case "setIdentifiedProperties":
-      self.setIdentifiedProperties(call, result)
+      self.setIdentifiedProperties(call: call, result: result)
       break
 		default:
 			result(FlutterMethodNotImplemented)
@@ -157,8 +157,10 @@ public class SwiftFlutuateMixpanelPlugin: NSObject, FlutterPlugin {
     Mixpanel.mainInstance().identify(distinctId: distinctId);
   }
     private func setIdentifiedProperties(call: FlutterMethodCall, result: @escaping FlutterResult) {
-      let arguments = call.arguments as? [String : Any]
+   
+      let arguments = call.arguments as? [String:Any]
       let properties = arguments?["properties"] as? [String: Any]
-      Mixpanel.mainInstance().people.set(properties:properties)
+      let mappedProperties = mapDictionary(properties: properties)!
+      Mixpanel.mainInstance().people.set(properties:mappedProperties);
     }
 }
