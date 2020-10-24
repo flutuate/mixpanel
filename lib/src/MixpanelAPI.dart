@@ -36,7 +36,7 @@ class MixpanelAPI {
       properties['optOutTrackingDefault'] = optOutTrackingDefault;
 
     String name =
-    await _channel.invokeMethod<String>('getInstance', properties);
+        await _channel.invokeMethod<String>('getInstance', properties);
 
     return new MixpanelAPI(name);
   }
@@ -60,7 +60,36 @@ class MixpanelAPI {
     _channel.invokeMethod<void>('track',
         <String, dynamic>{'eventName': eventName, 'properties': properties});
   }
-  
+
+  ///
+  /// Register Super Properties.
+  ///
+  /// See native [Mixpanel.registerSuperProperties](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#registerSuperProperties-org.json.JSONObject-)
+  /// for more information.
+  void registerSuperProperties([Map<String, dynamic> properties]) {
+    _channel.invokeMethod<void>(
+        'registerSuperProperties', <String, dynamic>{'properties': properties});
+  }
+
+  ///
+  /// Register Super Properties Once.
+  ///
+  /// See native [Mixpanel.registerSuperPropertiesOnce](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#registerSuperPropertiesOnce-org.json.JSONObject-)
+  /// for more information.
+  void registerSuperPropertiesOnce([Map<String, dynamic> properties]) {
+    _channel.invokeMethod<void>('registerSuperPropertiesOnce',
+        <String, dynamic>{'properties': properties});
+  }
+
+  ///
+  /// Erase all currently registered superProperties.
+  ///
+  /// See native [Mixpanel.clearSuperProperties](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#clearSuperProperties--)
+  /// for more information.
+  void clearSuperProperties([Map<String, dynamic> properties]) {
+    _channel.invokeMethod<void>('clearSuperProperties');
+  }
+
   ///
   /// Returns an unmodifiable map that contains the device description properties that will be sent to Mixpanel.
   ///

@@ -99,6 +99,15 @@ public class FlutuateMixpanelPlugin
             case "setIdentifiedProperties":
                 setIdentifiedProperties(call, result);
                 break;
+            case "registerSuperProperties":
+                registerSuperProperties(call, result);
+                break;
+            case "registerSuperPropertiesOnce":
+                registerSuperPropertiesOnce(call, result);
+                break;
+            case "clearSuperProperties":
+                clearSuperProperties(result);
+                break;
             case "people":
                 handlePeopleMethods(call, result);
                 break;
@@ -148,6 +157,37 @@ public class FlutuateMixpanelPlugin
         String eventName = call.argument("eventName");
         Map<String, Object> properties = call.<HashMap<String, Object>>argument("properties");
         mixpanel.trackMap(eventName, properties);
+        result.success(null);
+    }
+
+    private void registerSuperProperties(MethodCall call, Result result) {
+        Map<String, Object> mapProperties = call.<HashMap<String, Object>>argument("properties");
+        JSONObject properties;
+        try {
+            properties = extractJSONObject(mapProperties == null ? EMPTY_HASHMAP : mapProperties);
+        } catch (JSONException e) {
+            result.error(e.getClass().getName(), e.toString(), "");
+            return;
+        }
+        mixpanel.registerSuperProperties(properties);
+        result.success(null);
+    }
+
+    private void registerSuperPropertiesOnce(MethodCall call, Result result) {
+        Map<String, Object> mapProperties = call.<HashMap<String, Object>>argument("properties");
+        JSONObject properties;
+        try {
+            properties = extractJSONObject(mapProperties == null ? EMPTY_HASHMAP : mapProperties);
+        } catch (JSONException e) {
+            result.error(e.getClass().getName(), e.toString(), "");
+            return;
+        }
+        mixpanel.registerSuperPropertiesOnce(properties);
+        result.success(null);
+    }
+
+    private void clearSuperProperties(Result result) {
+        mixpanel.clearSuperProperties();
         result.success(null);
     }
 

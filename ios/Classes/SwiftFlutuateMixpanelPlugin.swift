@@ -42,6 +42,15 @@
             case "identify":
                 self.identify(call: call, result: result)
                 break
+            case "registerSuperProperties":
+                self.registerSuperProperties(call: call, result: result)
+                break;
+            case "registerSuperPropertiesOnce":
+                self.registerSuperPropertiesOnce(call: call, result: result)
+                break;
+            case "clearSuperProperties":
+                self.clearSuperProperties(result: result)
+                break;
             case "people":
                 self.handlePeopleApi(call: call, result: result)
                 break
@@ -81,7 +90,7 @@
             let eventName = arguments?["eventName"] as? String
             let properties = arguments?["properties"] as? [String: Any]
             let mappedProperties = mapDictionary(properties: properties)
-            Mixpanel.mainInstance().track( event: eventName, properties: mappedProperties);
+            Mixpanel.mainInstance().track(event: eventName, properties: mappedProperties);
         }
 
         private func mapDictionary(properties: [String: Any]?) -> Properties? {
@@ -157,6 +166,23 @@
             Mixpanel.mainInstance().identify(distinctId: distinctId);
         }
         
+        private func registerSuperProperties(call: FlutterMethodCall, result: @escaping FlutterResult) {
+            let arguments = call.arguments as? [String:Any]
+            let properties = arguments?["properties"] as? [String: Any]
+            let mappedProperties = mapDictionary(properties: properties)
+            Mixpanel.mainInstance().registerSuperProperties(mappedProperties!)
+        }
+
+        private func registerSuperPropertiesOnce(call: FlutterMethodCall, result: @escaping FlutterResult) {
+            let arguments = call.arguments as? [String:Any]
+            let properties = arguments?["properties"] as? [String: Any]
+            let mappedProperties = mapDictionary(properties: properties)
+            Mixpanel.mainInstance().registerSuperPropertiesOnce(mappedProperties!)
+        }
+
+        private func clearSuperProperties(result: @escaping FlutterResult) {
+            Mixpanel.mainInstance().clearSuperProperties()
+        }
         
         // MARK: People API
 
