@@ -125,6 +125,17 @@ class MixpanelAPI {
   }
 
   ///
+  /// The alias method creates an alias which Mixpanel will use to remap one id to another.
+  /// Multiple aliases can point to the same identifier.
+  ///
+  /// See native [Mixpanel.alias](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#alias-java.lang.String-java.lang.String-)
+  /// for more information.
+  void alias(String alias, String distinctId) {
+    _channel.invokeMethod<void>(
+        'alias', {'alias': alias, 'distinctId': distinctId});
+  }
+
+  ///
   /// Use this method to opt-in an already opted-out user from tracking.
   ///
   /// See native [Mixpanel.optInTracking](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#optInTracking--)

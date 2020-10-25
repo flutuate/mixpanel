@@ -108,6 +108,9 @@ public class FlutuateMixpanelPlugin
             case "clearSuperProperties":
                 clearSuperProperties(result);
                 break;
+            case "alias":
+                alias(call, result);
+                break;
             case "people":
                 handlePeopleMethods(call, result);
                 break;
@@ -188,6 +191,13 @@ public class FlutuateMixpanelPlugin
 
     private void clearSuperProperties(Result result) {
         mixpanel.clearSuperProperties();
+        result.success(null);
+    }
+
+    private void alias(MethodCall call, Result result) {
+        String alias = call.argument("alias");
+        String distinctId = call.argument("distinctId");
+        mixpanel.alias(alias, distinctId);
         result.success(null);
     }
 

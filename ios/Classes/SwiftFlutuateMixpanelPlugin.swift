@@ -51,6 +51,9 @@
             case "clearSuperProperties":
                 self.clearSuperProperties(result: result)
                 break;
+            case "alias":
+                self.alias(call: call, result: result)
+                break
             case "people":
                 self.handlePeopleApi(call: call, result: result)
                 break
@@ -184,6 +187,13 @@
             Mixpanel.mainInstance().clearSuperProperties()
         }
         
+        private func alias(call: FlutterMethodCall, result: @escaping FlutterResult) {
+            let arguments = call.arguments as? [String : Any]
+            let alias = (arguments?["alias"] as? String)!
+            let distinctId = (arguments?["distinctId"] as? String)!
+            Mixpanel.mainInstance().createAlias(alias, distinctId: distinctId)
+        }
+
         // MARK: People API
 
         private func handlePeopleApi(call: FlutterMethodCall, result: @escaping  FlutterResult) {
