@@ -43,8 +43,7 @@ class _MyAppState extends State<MyApp> {
     List<Widget> content;
     if (_mixpanelToken == null || _mixpanelToken.trim().length == 0) {
       content = [Text('Your Mixpanel Token was not informed')];
-    }
-    else {
+    } else {
       content = createButtons(context);
     }
     return MaterialApp(
@@ -74,46 +73,44 @@ class _MyAppState extends State<MyApp> {
     return [
       buttonGetInstance(context),
       buttonTrackEvent(context),
+      buttonRegisterSuperProperties(context),
       buttonGetDeviceInfo(context),
       buttonGetDistinctId(context),
+      buttonReset(context),
       buttonFlush(context),
     ];
   }
 
-  Widget buttonGetInstance(BuildContext context) =>
-      RaisedButton(
-          key: Key('getInstance'),
-          child: Text('Get an instance of Mixpanel plugin'),
-          onPressed: () => getInstance()
-      );
+  Widget buttonGetInstance(BuildContext context) => RaisedButton(
+      key: Key('getInstance'),
+      child: Text('Get an instance of Mixpanel plugin'),
+      onPressed: () => getInstance());
 
-  Widget buttonTrackEvent(BuildContext context) =>
-    RaisedButton(
+  Widget buttonTrackEvent(BuildContext context) => RaisedButton(
       key: Key('trackEvent'),
       child: Text('Track an event'),
-      onPressed: () => trackEvent()
-    );
+      onPressed: () => trackEvent());
 
-  Widget buttonGetDeviceInfo(BuildContext context) =>
-    RaisedButton(
-        key: Key('getDeviceInfo'),
-        child: Text('Get device info'),
-        onPressed: () => getDeviceInfo()
-    );
+  Widget buttonRegisterSuperProperties(BuildContext context) => RaisedButton(
+      key: Key('registerSuperProperties'),
+      child: Text('Register Super Properties'),
+      onPressed: () => registerSuperProperties());
 
-  Widget buttonGetDistinctId(BuildContext context) =>
-      RaisedButton(
-          key: Key('getDistinctId'),
-          child: Text('Get distinct id'),
-          onPressed: () => getDistinctId()
-      );
+  Widget buttonReset(BuildContext context) => RaisedButton(
+      key: Key('reset'), child: Text('Reset'), onPressed: () => reset());
 
-  Widget buttonFlush(BuildContext context) =>
-      RaisedButton(
-          key: Key('flush'),
-          child: Text('Flush'),
-          onPressed: () => flush()
-      );
+  Widget buttonGetDeviceInfo(BuildContext context) => RaisedButton(
+      key: Key('getDeviceInfo'),
+      child: Text('Get device info'),
+      onPressed: () => getDeviceInfo());
+
+  Widget buttonGetDistinctId(BuildContext context) => RaisedButton(
+      key: Key('getDistinctId'),
+      child: Text('Get distinct id'),
+      onPressed: () => getDistinctId());
+
+  Widget buttonFlush(BuildContext context) => RaisedButton(
+      key: Key('flush'), child: Text('Flush'), onPressed: () => flush());
 
   void getInstance() {
     MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
@@ -130,6 +127,20 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _resultMessage = 'Event sent with success!';
     });
+  }
+
+  void registerSuperProperties() {
+    Map<String, String> properties = {
+      "Plugin": "flutuate_mixpanel",
+    };
+    _mixpanel.registerSuperProperties(properties);
+    setState(() {
+      _resultMessage = 'Register Super Properties with success!';
+    });
+  }
+
+  void reset() {
+    _mixpanel.reset();
   }
 
   void getDeviceInfo() async {
