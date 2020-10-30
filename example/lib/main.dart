@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 
 /// Set your Mixpanel token here before run the example app.
@@ -23,7 +25,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   MixpanelAPI _mixpanel;
-  String _mixpanelToken;
+  final String _mixpanelToken;
   String _resultMessage = '';
 
   _MyAppState(this._mixpanelToken);
@@ -41,7 +43,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> content;
-    if (_mixpanelToken == null || _mixpanelToken.trim().length == 0) {
+    if (_mixpanelToken == null || _mixpanelToken.trim().isEmpty) {
       content = [Text('Your Mixpanel Token was not informed')];
     }
     else {
@@ -81,28 +83,28 @@ class _MyAppState extends State<MyApp> {
   }
 
   Widget buttonGetInstance(BuildContext context) =>
-      RaisedButton(
-          key: Key('getInstance'),
-          child: Text('Get an instance of Mixpanel plugin'),
-          onPressed: () => getInstance()
-      );
+    ElevatedButton(
+      key: Key('getInstance'),
+      child: Text('Get an instance of Mixpanel plugin'),
+      onPressed: () => getInstance(),
+    );
 
   Widget buttonTrackEvent(BuildContext context) =>
-    RaisedButton(
+    ElevatedButton(
       key: Key('trackEvent'),
       child: Text('Track an event'),
       onPressed: () => trackEvent()
     );
 
   Widget buttonGetDeviceInfo(BuildContext context) =>
-    RaisedButton(
+    ElevatedButton(
         key: Key('getDeviceInfo'),
         child: Text('Get device info'),
         onPressed: () => getDeviceInfo()
     );
 
   Widget buttonGetDistinctId(BuildContext context) =>
-      RaisedButton(
+      ElevatedButton(
           key: Key('getDistinctId'),
           child: Text('Get distinct id'),
           onPressed: () => getDistinctId()
@@ -125,7 +127,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void trackEvent() {
-    Map<String, String> properties = {"Button Pressed": "A button was pressed"};
+    var properties = <String, String>{'Button Pressed': 'A button was pressed'};
     _mixpanel.track('Flutuate.io Mixpanel Plugin Event', properties);
     setState(() {
       _resultMessage = 'Event sent with success!';
@@ -133,7 +135,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getDeviceInfo() async {
-    Map<String, String> devInfo = await _mixpanel.getDeviceInfo();
+    var devInfo = await _mixpanel.getDeviceInfo();
     print(devInfo);
     setState(() {
       _resultMessage = devInfo.toString();
@@ -141,7 +143,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getDistinctId() async {
-    String distinctId = await _mixpanel.getDistinctId();
+    var distinctId = await _mixpanel.getDistinctId();
     print(distinctId);
     setState(() {
       _resultMessage = distinctId;

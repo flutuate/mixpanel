@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 class MixpanelAPI {
   static const String _pluginName = 'flutuate_mixpanel';
 
-  static const MethodChannel _channel = const MethodChannel(_pluginName);
+  static const MethodChannel _channel = MethodChannel(_pluginName);
 
   final String instanceId;
 
@@ -26,15 +26,16 @@ class MixpanelAPI {
   /// for more information.
   static Future<MixpanelAPI> getInstance(String token,
       {bool optOutTrackingDefault}) async {
-    Map<String, dynamic> properties = <String, dynamic>{'token': token};
+    var properties = <String, dynamic>{'token': token};
 
-    if (optOutTrackingDefault != null)
+    if (optOutTrackingDefault != null) {
       properties['optOutTrackingDefault'] = optOutTrackingDefault;
+    }
 
-    String name =
+    var name =
         await _channel.invokeMethod<String>('getInstance', properties);
 
-    return new MixpanelAPI(name);
+    return MixpanelAPI(name);
   }
 
   ///
@@ -63,8 +64,8 @@ class MixpanelAPI {
   /// See native [Mixpanel.getDeviceInfo](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getDeviceInfo--)
   /// for more information.
   Future<Map<String, String>> getDeviceInfo() async {
-    Map result = await _channel.invokeMethod<Map>('getDeviceInfo');
-    Map<String, String> devInfo = {};
+    var result = await _channel.invokeMethod<Map>('getDeviceInfo');
+    var devInfo = <String, String>{};
     for (dynamic key in result.keys) {
       devInfo[key as String] = result[key] as String;
     }

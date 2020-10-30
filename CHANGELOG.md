@@ -1,3 +1,28 @@
+# Changelog
+
+## 1.1.6
+
+* Add registerSuperProperties, registerSuperPropertiesOnce, clearSuperProperties, alias.
+* People api.
+* Change properties to mappedProperties.
+* Added setIdentifiedProperties to iOS.
+* Updated Flutter SDK version reference.
+* Added analysis_options.yaml.
+* Change RaisedButton to ElevatedButton in example project.
+* Code cleaned.
+
+## 1.1.5
+
+* Last Added handling for all mixpanel properties type to iOS code base.
+
+## 1.1.4
+
+* Do not use this version.
+
+## 1.1.3
+
+* Fix bug casting properties in iOS.
+
 ## 1.1.2
 
 * Now sending distinctId in identify().

@@ -22,7 +22,7 @@ class Secrets {
 
   /// Build the [mixpanelToken] from a json [Map].
   factory Secrets._fromJson(Map<String, dynamic> jsonMap) {
-    return new Secrets(mixpanelToken: jsonMap['mixpanel_token']);
+    return Secrets(mixpanelToken: jsonMap['mixpanel_token']);
   }
 
   /// Load the 'resources/secret.json' file that contains the json with the
@@ -44,11 +44,11 @@ class Secrets {
   /// at path '<project-folder>/test/resources/secrets.json', if not found, it
   /// will search at '<project-folder>/resources/secrets.json'.
   static Future<Secrets> loadFromFile() {
-    File file = new File('test/resources/secrets.json');
+    var file = File('test/resources/secrets.json');
     if (!file.existsSync()) {
-      file = new File('resources/secrets.json');
+      file = File('resources/secrets.json');
     }
-    final String content = file.readAsStringSync();
+    final content = file.readAsStringSync();
     final Map map = json.decode(content);
     return Future<Secrets>.value(Secrets._fromJson(map));
   }

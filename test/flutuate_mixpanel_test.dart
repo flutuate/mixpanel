@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart' as flutterTest;
+import 'package:flutter_test/flutter_test.dart' as flutter_test;
 import 'package:flutuate_mixpanel/flutuate_mixpanel.dart';
 import 'package:test/test.dart';
 import 'dart:io' show Platform;
@@ -9,7 +9,7 @@ void main() {
 
   MixpanelAPI _mixpanel;
 
-  flutterTest.TestWidgetsFlutterBinding.ensureInitialized();
+  flutter_test.TestWidgetsFlutterBinding.ensureInitialized();
 
   setUpAll(() async {
     /*channel.setMockMethodCallHandler((MethodCall methodCall) async {
@@ -30,7 +30,7 @@ void main() {
     /// ATTENTION: Before run, you must to inform your Mixpanel token in environment variable called 'mixpanel_token'.
     var envVars = Platform.environment;
     _mixpanelToken = envVars['mixpanel_token'];
-    MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
+    await MixpanelAPI.getInstance(_mixpanelToken).then((mixpanel) {
       _mixpanel = mixpanel;
     });
   });
@@ -49,13 +49,13 @@ void main() {
   });
 
   test('Mixpanel.getDeviceInfo', () async {
-    Map<String, String> devInfo = await _mixpanel.getDeviceInfo();
+    var devInfo = await _mixpanel.getDeviceInfo();
     expect(devInfo.containsKey('\$android_os'), equals(true));
     expect(devInfo['\$android_os'], equals('Android'));
   });
 
   test('Mixpanel.getDistinctId', () async {
-    String distinctId = await _mixpanel.getDistinctId();
+    var distinctId = await _mixpanel.getDistinctId();
     expect(distinctId, equals('2345d678-fb90-12b3-4567-8a90e1cdc234'));
   });
 

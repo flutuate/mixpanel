@@ -1,6 +1,6 @@
 name: flutuate_mixpanel_example
 description: Demonstrates how to use the flutuate_mixpanel plugin.
-version: 1.1.4
+version: 1.1.6
 #author: Luciano Rodrigues <flutuate.io@gmail.com>
 homepage: https://github.com/flutuate/mixpanel
 
@@ -10,11 +10,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
+  flutter: ">=1.22.0 <2.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  test: ^1.14.4
 
   flutuate_mixpanel:
     # When depending on this package from a real application you should use:
@@ -31,6 +31,7 @@ dependencies:
 dev_dependencies:
   flutter_driver:
     sdk: flutter
+  test: ^1.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
