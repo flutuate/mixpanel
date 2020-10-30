@@ -9,6 +9,8 @@
 .buildlog/
 .history
 .svn/
+.gradle/
+local.properties
 
 # Visual Studio Code related
 .vscode/

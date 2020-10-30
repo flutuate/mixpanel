@@ -81,35 +81,35 @@ class _MyAppState extends State<MyApp> {
     ];
   }
 
-  Widget buttonGetInstance(BuildContext context) => RaisedButton(
+  Widget buttonGetInstance(BuildContext context) => ElevatedButton(
       key: Key('getInstance'),
       child: Text('Get an instance of Mixpanel plugin'),
       onPressed: () => getInstance());
 
-  Widget buttonTrackEvent(BuildContext context) => RaisedButton(
+  Widget buttonTrackEvent(BuildContext context) => ElevatedButton(
       key: Key('trackEvent'),
       child: Text('Track an event'),
       onPressed: () => trackEvent());
 
-  Widget buttonRegisterSuperProperties(BuildContext context) => RaisedButton(
+  Widget buttonRegisterSuperProperties(BuildContext context) => ElevatedButton(
       key: Key('registerSuperProperties'),
       child: Text('Register Super Properties'),
       onPressed: () => registerSuperProperties());
 
-  Widget buttonReset(BuildContext context) => RaisedButton(
+  Widget buttonReset(BuildContext context) => ElevatedButton(
       key: Key('reset'), child: Text('Reset'), onPressed: () => reset());
 
-  Widget buttonGetDeviceInfo(BuildContext context) => RaisedButton(
+  Widget buttonGetDeviceInfo(BuildContext context) => ElevatedButton(
       key: Key('getDeviceInfo'),
       child: Text('Get device info'),
       onPressed: () => getDeviceInfo());
 
-  Widget buttonGetDistinctId(BuildContext context) => RaisedButton(
+  Widget buttonGetDistinctId(BuildContext context) => ElevatedButton(
       key: Key('getDistinctId'),
       child: Text('Get distinct id'),
       onPressed: () => getDistinctId());
 
-  Widget buttonFlush(BuildContext context) => RaisedButton(
+  Widget buttonFlush(BuildContext context) => ElevatedButton(
       key: Key('flush'), child: Text('Flush'), onPressed: () => flush());
 
   void getInstance() {

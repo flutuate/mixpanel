@@ -22,7 +22,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class FlutuateMixpanelPlugin
         implements FlutterPlugin, MethodCallHandler {
-    private static final String name = "flutuate_mixpanel";
+    public  static final String name = "flutuate_mixpanel";
     private static final Map<String, Object> EMPTY_HASHMAP = new HashMap<>();
 
     private MethodChannel channel;
