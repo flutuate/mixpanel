@@ -63,9 +63,16 @@ doc/api/
 
 # Secrets
 **/resources/secrets/**
-**/resources/secrets.json
+ **/resources/secrets.json
 **/test/resources/secrets/**
-**/test/resources/secrets.json
+ **/test/resources/secrets.json
 **/**/secrets.json
 .idea/libraries/Dart_SDK.xml
 .idea/modules.xml
+
+android/.classpath
+android/.project
+android/.settings/
+example/android/app/bin/
+example/android/.project
+example/android/app/.project
