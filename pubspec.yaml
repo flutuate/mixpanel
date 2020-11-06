@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   test: ^1.14.4
 
 dev_dependencies:
@@ -35,6 +37,9 @@ flutter:
         pluginClass: FlutuateMixpanelPlugin
       ios:
         pluginClass: FlutuateMixpanelPlugin
+      web:
+        pluginClass: FlutuateMixpanelPluginWeb
+        fileName: src/FlutuateMixpanelPluginWeb.dart
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

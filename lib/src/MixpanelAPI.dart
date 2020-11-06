@@ -7,39 +7,54 @@ import 'package:flutter/services.dart';
 ///
 /// See native [MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
 /// for more information.
-class MixpanelAPI {
-  static const String _pluginName = 'flutuate_mixpanel';
+class MixpanelAPI
+{
+  static const String pluginName = 'flutuate_mixpanel';
 
-  static const MethodChannel _channel = MethodChannel(_pluginName);
-
+  final MethodChannel _channel;
   final String instanceId;
-  final People _people = People._(_channel);
+  final People _people;
 
   ///Accessor to the Mixpanel People API object
   People get people => _people;
 
-  MixpanelAPI(this.instanceId);
+  MixpanelAPI._(this._channel, this.instanceId) :
+    _people = People._(_channel);
 
+  /// Convenient method to start a native instance of MixpanelAPI using
+  /// a previously registered [channel].
   ///
-  /// Get the instance of native MixpanelAPI associated with your Mixpanel project
-  /// [token].
-  ///
-  /// If you need test your application, set [mocked] as ```true```. See [MixpanelMockedAPI].
-  ///
-  /// See native [Mixpanel.getInstance](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getInstance-android.content.Context-java.lang.String-boolean-)
-  /// for more information.
-  static Future<MixpanelAPI> getInstance(String token,
-      {bool optOutTrackingDefault}) async {
+  /// To more information, see [getInstance].
+  static Future<MixpanelAPI> getInstanceUsingChannel(String token, bool optOutTrackingDefault, MethodChannel channel) async {
     var properties = <String, dynamic>{'token': token};
 
     if (optOutTrackingDefault != null) {
       properties['optOutTrackingDefault'] = optOutTrackingDefault;
     }
 
-    var name =
-        await _channel.invokeMethod<String>('getInstance', properties);
+    var name = await channel.invokeMethod<String>('getInstance', properties);
 
-    return MixpanelAPI(name);
+    return MixpanelAPI._(channel, name);
+  }
+
+  ///
+  /// Get the instance of native MixpanelAPI associated with your Mixpanel project
+  /// [token].
+  ///
+  /// See native [Mixpanel.getInstance](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getInstance-android.content.Context-java.lang.String-boolean-)
+  /// for more information.
+  static Future<MixpanelAPI> getInstance(String token, {bool optOutTrackingDefault=false}) async {
+    var properties = <String, dynamic>{'token': token};
+
+    if (optOutTrackingDefault != null) {
+      properties['optOutTrackingDefault'] = optOutTrackingDefault;
+    }
+
+    final channel = MethodChannel(pluginName);
+
+    var name = await channel.invokeMethod<String>('getInstance', properties);
+
+    return MixpanelAPI._(channel, name);
   }
 
   ///
@@ -163,6 +178,7 @@ class MixpanelAPI {
   void reset() {
     _channel.invokeMethod<void>('reset');
   }
+
 }
 
 class People {
@@ -178,9 +194,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void addPushDeviceToken(String token) {
-    _channel.invokeMapMethod("people", {
-      "method": "addPushDeviceToken",
-      "params": {"token": token}
+    _channel.invokeMapMethod('people', {
+      'method': 'addPushDeviceToken',
+      'params': {'token': token}
     });
   }
 
@@ -192,8 +208,8 @@ class People {
   /// for more information.
   ///
   void removeAllPushDeviceTokens() {
-    _channel.invokeMapMethod("people", {
-      "method": "removeAllPushDeviceTokens",
+    _channel.invokeMapMethod('people', {
+      'method': 'removeAllPushDeviceTokens',
     });
   }
 
@@ -204,9 +220,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void removePushDeviceToken(String token) {
-    _channel.invokeMapMethod("people", {
-      "method": "removePushDeviceToken",
-      "params": {"token": token}
+    _channel.invokeMapMethod('people', {
+      'method': 'removePushDeviceToken',
+      'params': {'token': token}
     });
   }
 
@@ -222,9 +238,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void set(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "set",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'set',
+      'params': properties,
     });
   }
 
@@ -247,9 +263,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void setOnce(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "setOnce",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'setOnce',
+      'params': properties,
     });
   }
 
@@ -261,9 +277,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void unset(List<String> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "unset",
-      "params": {"names": properties},
+    _channel.invokeMapMethod('people', {
+      'method': 'unset',
+      'params': {'names': properties},
     });
   }
 
@@ -275,9 +291,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void increment(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "increment",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'increment',
+      'params': properties,
     });
   }
 
@@ -286,9 +302,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void incrementBy(String property, double value) {
-    _channel.invokeMapMethod("people", {
-      "method": "incrementBy",
-      "params": {"property": property, "by": value},
+    _channel.invokeMapMethod('people', {
+      'method': 'incrementBy',
+      'params': {'property': property, 'by': value},
     });
   }
 
@@ -298,9 +314,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void append(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "append",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'append',
+      'params': properties,
     });
   }
 
@@ -310,9 +326,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void remove(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "remove",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'remove',
+      'params': properties,
     });
   }
 
@@ -325,9 +341,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void trackCharge(double ammount, {Map<String, dynamic> properties}) {
-    _channel.invokeMapMethod("people", {
-      "method": "trackCharge",
-      "params": {"ammount": ammount, "properties": properties},
+    _channel.invokeMapMethod('people', {
+      'method': 'trackCharge',
+      'params': {'ammount': ammount, 'properties': properties},
     });
   }
 
@@ -335,8 +351,8 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void clearCharges() {
-    _channel.invokeMapMethod("people", {
-      "method": "clearCharges",
+    _channel.invokeMapMethod('people', {
+      'method': 'clearCharges',
     });
   }
 
@@ -344,8 +360,8 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void deleteUser() {
-    _channel.invokeMapMethod("people", {
-      "method": "deleteUser",
+    _channel.invokeMapMethod('people', {
+      'method': 'deleteUser',
     });
   }
 }

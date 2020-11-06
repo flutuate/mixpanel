@@ -22,8 +22,8 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final String _mixpanelToken;
   MixpanelAPI _mixpanel;
-  String _mixpanelToken;
   String _resultMessage = '';
 
   _MyAppState(this._mixpanelToken);
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> content;
-    if (_mixpanelToken == null || _mixpanelToken.trim().length == 0) {
+    if (_mixpanelToken == null || _mixpanelToken.trim().isEmpty) {
       content = [Text('Your Mixpanel Token was not informed')];
     } else {
       content = createButtons(context);
@@ -122,7 +122,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void trackEvent() {
-    Map<String, String> properties = {"Button Pressed": "A button was pressed"};
+    var properties = <String, String>{'Button Pressed': 'A button was pressed'};
     _mixpanel.track('Flutuate.io Mixpanel Plugin Event', properties);
     setState(() {
       _resultMessage = 'Event sent with success!';
@@ -130,8 +130,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void registerSuperProperties() {
-    Map<String, String> properties = {
-      "Plugin": "flutuate_mixpanel",
+    var properties = <String, String>{
+      'Plugin': 'flutuate_mixpanel',
     };
     _mixpanel.registerSuperProperties(properties);
     setState(() {
@@ -144,7 +144,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getDeviceInfo() async {
-    Map<String, String> devInfo = await _mixpanel.getDeviceInfo();
+    var devInfo = await _mixpanel.getDeviceInfo();
     print(devInfo);
     setState(() {
       _resultMessage = devInfo.toString();
@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getDistinctId() async {
-    String distinctId = await _mixpanel.getDistinctId();
+    var distinctId = await _mixpanel.getDistinctId();
     print(distinctId);
     setState(() {
       _resultMessage = distinctId;
