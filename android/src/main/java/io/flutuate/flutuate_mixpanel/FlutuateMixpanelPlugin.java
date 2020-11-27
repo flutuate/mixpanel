@@ -114,6 +114,9 @@ public class FlutuateMixpanelPlugin
             case "people":
                 handlePeopleMethods(call, result);
                 break;
+            case "timeEvent":
+                timeEvent(call, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -153,6 +156,12 @@ public class FlutuateMixpanelPlugin
 
         mixpanel.track(eventName, properties);
 
+        result.success(null);
+    }
+
+    private void timeEvent(MethodCall call, Result result) {
+        String eventName = call.argument("eventName");
+        mixpanel.timeEvent(eventName);
         result.success(null);
     }
 

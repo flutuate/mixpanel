@@ -63,6 +63,17 @@ class MixpanelAPI {
   }
 
   ///
+  /// Time event.
+  ///
+  /// See native [Mixpanel.track](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#track-java.lang.String-org.json.JSONObject-)
+  /// and [Mixpanel.trackMap](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#trackMap-java.lang.String-java.util.Map-)
+  /// for more information.
+  void timeEvent(String eventName) {
+    _channel.invokeMethod<void>('timeEvent',
+        <String, dynamic>{'eventName': eventName});
+  }
+
+  ///
   /// Register Super Properties.
   ///
   /// See native [Mixpanel.registerSuperProperties](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#registerSuperProperties-org.json.JSONObject-)
