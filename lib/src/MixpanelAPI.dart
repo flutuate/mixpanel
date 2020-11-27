@@ -36,8 +36,7 @@ class MixpanelAPI {
       properties['optOutTrackingDefault'] = optOutTrackingDefault;
     }
 
-    var name =
-        await _channel.invokeMethod<String>('getInstance', properties);
+    var name = await _channel.invokeMethod<String>('getInstance', properties);
 
     return MixpanelAPI(name);
   }
@@ -69,8 +68,8 @@ class MixpanelAPI {
   /// and [Mixpanel.trackMap](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#trackMap-java.lang.String-java.util.Map-)
   /// for more information.
   void timeEvent(String eventName) {
-    _channel.invokeMethod<void>('timeEvent',
-        <String, dynamic>{'eventName': eventName});
+    _channel.invokeMethod<void>(
+        'timeEvent', <String, dynamic>{'eventName': eventName});
   }
 
   ///

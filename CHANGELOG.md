@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.7
+
+* Update platform version
+* add time event
+
 ## 1.1.6
 
 * Add registerSuperProperties, registerSuperPropertiesOnce, clearSuperProperties, alias.
