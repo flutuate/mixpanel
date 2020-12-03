@@ -317,6 +317,8 @@ public class FlutuateMixpanelPlugin
                     break;
                 case "deleteUser":
                     people.deleteUser();
+                case "identify":
+                    people.identify(params.get("distinctId").toString());
                     break;
 
             }
