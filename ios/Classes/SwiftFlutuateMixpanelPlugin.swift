@@ -190,8 +190,13 @@
         private func alias(call: FlutterMethodCall, result: @escaping FlutterResult) {
             let arguments = call.arguments as? [String : Any]
             let alias = (arguments?["alias"] as? String)!
-            let distinctId = (arguments?["distinctId"] as? String)!
-            Mixpanel.mainInstance().createAlias(alias, distinctId: distinctId)
+            let distinctId = (arguments?["distinctId"] as? String)
+            if(distinctId==nil){
+                Mixpanel.mainInstance().createAlias(alias, distinctId: Mixpanel.mainInstance().distinctId)
+            } else{
+                Mixpanel.mainInstance().createAlias(alias, distinctId: distinctId!)            
+            }
+            
         }
 
         // MARK: People API
