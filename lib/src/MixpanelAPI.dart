@@ -358,4 +358,14 @@ class People {
       "method": "deleteUser",
     });
   }
+
+  /// Identify current user's record from Mixpanel People.
+  /// See native [Mixpanel.people.identify](https://developer.mixpanel.com/docs/android#combining-anonymous-and-identifiable-user-data)
+  /// for more information.
+  void identify(String distinctId) {
+    _channel.invokeMapMethod("people", {
+      "method": "identify",
+      "params": {"distinctId": distinctId},
+    });
+  }
 }
