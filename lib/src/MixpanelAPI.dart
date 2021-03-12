@@ -188,9 +188,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void addPushDeviceToken(String token) {
-    _channel.invokeMapMethod("people", {
-      "method": "addPushDeviceToken",
-      "params": {"token": token}
+    _channel.invokeMapMethod('people', {
+      'method': 'addPushDeviceToken',
+      'params': {'token': token}
     });
   }
 
@@ -202,8 +202,8 @@ class People {
   /// for more information.
   ///
   void removeAllPushDeviceTokens() {
-    _channel.invokeMapMethod("people", {
-      "method": "removeAllPushDeviceTokens",
+    _channel.invokeMapMethod('people', {
+      'method': 'removeAllPushDeviceTokens',
     });
   }
 
@@ -214,9 +214,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void removePushDeviceToken(String token) {
-    _channel.invokeMapMethod("people", {
-      "method": "removePushDeviceToken",
-      "params": {"token": token}
+    _channel.invokeMapMethod('people', {
+      'method': 'removePushDeviceToken',
+      'params': {'token': token}
     });
   }
 
@@ -232,9 +232,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void set(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "set",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'set',
+      'params': properties,
     });
   }
 
@@ -257,9 +257,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void setOnce(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "setOnce",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'setOnce',
+      'params': properties,
     });
   }
 
@@ -271,9 +271,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void unset(List<String> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "unset",
-      "params": {"names": properties},
+    _channel.invokeMapMethod('people', {
+      'method': 'unset',
+      'params': {'names': properties},
     });
   }
 
@@ -285,9 +285,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void increment(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "increment",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'increment',
+      'params': properties,
     });
   }
 
@@ -296,9 +296,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void incrementBy(String property, double value) {
-    _channel.invokeMapMethod("people", {
-      "method": "incrementBy",
-      "params": {"property": property, "by": value},
+    _channel.invokeMapMethod('people', {
+      'method': 'incrementBy',
+      'params': {'property': property, 'by': value},
     });
   }
 
@@ -308,9 +308,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void append(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "append",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'append',
+      'params': properties,
     });
   }
 
@@ -320,9 +320,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void remove(Map<String, dynamic> properties) {
-    _channel.invokeMapMethod("people", {
-      "method": "remove",
-      "params": properties,
+    _channel.invokeMapMethod('people', {
+      'method': 'remove',
+      'params': properties,
     });
   }
 
@@ -335,9 +335,9 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void trackCharge(double ammount, {Map<String, dynamic> properties}) {
-    _channel.invokeMapMethod("people", {
-      "method": "trackCharge",
-      "params": {"ammount": ammount, "properties": properties},
+    _channel.invokeMapMethod('people', {
+      'method': 'trackCharge',
+      'params': {'ammount': ammount, 'properties': properties},
     });
   }
 
@@ -345,8 +345,8 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void clearCharges() {
-    _channel.invokeMapMethod("people", {
-      "method": "clearCharges",
+    _channel.invokeMapMethod('people', {
+      'method': 'clearCharges',
     });
   }
 
@@ -354,8 +354,8 @@ class People {
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
   void deleteUser() {
-    _channel.invokeMapMethod("people", {
-      "method": "deleteUser",
+    _channel.invokeMapMethod('people', {
+      'method': 'deleteUser',
     });
   }
 
@@ -363,9 +363,9 @@ class People {
   /// See native [Mixpanel.people.identify](https://developer.mixpanel.com/docs/android#combining-anonymous-and-identifiable-user-data)
   /// for more information.
   void identify(String distinctId) {
-    _channel.invokeMapMethod("people", {
-      "method": "identify",
-      "params": {"distinctId": distinctId},
+    _channel.invokeMapMethod('people', {
+      'method': 'identify',
+      'params': {'distinctId': distinctId},
     });
   }
 }

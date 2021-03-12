@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.8
+
+* Added support for alias call with null distinctId
+* add people identify function
+
 ## 1.1.7
 
 * Update platform version
