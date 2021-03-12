@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  MixpanelAPI _mixpanel;
+  MixpanelAPI? _mixpanel;
   final String _mixpanelToken;
   String _resultMessage = '';
 
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     List<Widget> content;
-    if (_mixpanelToken == null || _mixpanelToken.isEmpty) {
+    if (_mixpanelToken.isEmpty) {
       content = [Text('Your Mixpanel Token was not informed')];
     } else {
       content = createButtons(context);
@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
 
   void trackEvent() {
     var properties = {'Button Pressed': 'A button was pressed'};
-    _mixpanel.track('Flutuate.io Mixpanel Plugin Event', properties);
+    _mixpanel!.track('Flutuate.io Mixpanel Plugin Event', properties);
     setState(() {
       _resultMessage = 'Event sent with success!';
     });
@@ -133,18 +133,18 @@ class _MyAppState extends State<MyApp> {
     var properties = {
       'Plugin': 'flutuate_mixpanel',
     };
-    _mixpanel.registerSuperProperties(properties);
+    _mixpanel!.registerSuperProperties(properties);
     setState(() {
       _resultMessage = 'Register Super Properties with success!';
     });
   }
 
   void reset() {
-    _mixpanel.reset();
+    _mixpanel!.reset();
   }
 
   void getDeviceInfo() async {
-    var devInfo = await _mixpanel.getDeviceInfo();
+    var devInfo = await _mixpanel!.getDeviceInfo();
     print(devInfo);
     setState(() {
       _resultMessage = devInfo.toString();
@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void getDistinctId() async {
-    var distinctId = await _mixpanel.getDistinctId();
+    var distinctId = await _mixpanel!.getDistinctId();
     print(distinctId);
     setState(() {
       _resultMessage = distinctId;
@@ -160,7 +160,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void flush() {
-    _mixpanel.flush();
+    _mixpanel!.flush();
     setState(() {
       _resultMessage = 'Flushed with success!';
     });

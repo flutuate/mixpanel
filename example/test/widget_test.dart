@@ -14,7 +14,7 @@ void main() {
       (WidgetTester tester) async {
 
     // Add your Mixpanel token here.
-    final String mixpanelToken = null;
+    final mixpanelToken = '--specify-your-token--';
 
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp(mixpanelToken));
@@ -23,7 +23,7 @@ void main() {
     expect(
       find.byWidgetPredicate((Widget widget) {
         if (widget is Text) {
-          return widget.data.startsWith('Press me to track') ||
+          return widget.data!.startsWith('Press me to track') ||
               widget.data == 'Your Mixpanel Token was not informed';
         }
         return false;
