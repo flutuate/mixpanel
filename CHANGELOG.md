@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.0-nullsafety.1
+
+* Null safety.
+
 ## 1.1.8
 
 * Added support for alias call with null distinctId

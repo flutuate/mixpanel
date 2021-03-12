@@ -49,7 +49,7 @@ class Secrets {
       file = File('resources/secrets.json');
     }
     final content = file.readAsStringSync();
-    final Map map = json.decode(content);
+    final Map<String, dynamic> map = json.decode(content);
     return Future<Secrets>.value(Secrets._fromJson(map));
   }
 }

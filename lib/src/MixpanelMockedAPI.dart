@@ -6,7 +6,7 @@ import 'MixpanelAPI.dart';
 /// See [Mixpanel] wrapper and [native MixpanelAPI](https://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html)
 /// for more information.
 class MixpanelMockedAPI extends MixpanelAPI {
-  MixpanelMockedAPI() : super(null);
+  MixpanelMockedAPI() : super('');
 
   /// Do nothing.
   @override
@@ -14,7 +14,7 @@ class MixpanelMockedAPI extends MixpanelAPI {
 
   /// Prints to console the [eventName] and [properties].
   @override
-  void track(String eventName, [Map<String, dynamic> properties]) {
+  void track(String eventName, [Map<String, dynamic> properties = const {}]) {
     print('$runtimeType.track: {$eventName=$properties}');
   }
 

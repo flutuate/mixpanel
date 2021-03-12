@@ -11,6 +11,7 @@ class MixpanelAPI {
   static const String _pluginName = 'flutuate_mixpanel';
 
   static const MethodChannel _channel = MethodChannel(_pluginName);
+  static const String invalidDistinctId = '';
 
   final String instanceId;
   final People _people = People._(_channel);
@@ -22,23 +23,21 @@ class MixpanelAPI {
 
   ///
   /// Get the instance of native MixpanelAPI associated with your Mixpanel project
-  /// [token].
+  /// [token]. The parameter [optOutTrackingDefault] is `false` by default.
   ///
   /// If you need test your application, set [mocked] as ```true```. See [MixpanelMockedAPI].
   ///
   /// See native [Mixpanel.getInstance](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getInstance-android.content.Context-java.lang.String-boolean-)
   /// for more information.
   static Future<MixpanelAPI> getInstance(String token,
-      {bool optOutTrackingDefault}) async {
+      {bool optOutTrackingDefault=false}) async {
     var properties = <String, dynamic>{'token': token};
 
-    if (optOutTrackingDefault != null) {
-      properties['optOutTrackingDefault'] = optOutTrackingDefault;
-    }
+    properties['optOutTrackingDefault'] = optOutTrackingDefault;
 
     var name = await _channel.invokeMethod<String>('getInstance', properties);
 
-    return MixpanelAPI(name);
+    return MixpanelAPI(name!);
   }
 
   ///
@@ -56,7 +55,7 @@ class MixpanelAPI {
   /// See native [Mixpanel.track](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#track-java.lang.String-org.json.JSONObject-)
   /// and [Mixpanel.trackMap](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#trackMap-java.lang.String-java.util.Map-)
   /// for more information.
-  void track(String eventName, [Map<String, dynamic> properties]) {
+  void track(String eventName, [Map<String, dynamic> properties = const {}]) {
     _channel.invokeMethod<void>('track',
         <String, dynamic>{'eventName': eventName, 'properties': properties});
   }
@@ -77,7 +76,7 @@ class MixpanelAPI {
   ///
   /// See native [Mixpanel.registerSuperProperties](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#registerSuperProperties-org.json.JSONObject-)
   /// for more information.
-  void registerSuperProperties([Map<String, dynamic> properties]) {
+  void registerSuperProperties([Map<String, dynamic> properties = const {}]) {
     _channel.invokeMethod<void>(
         'registerSuperProperties', <String, dynamic>{'properties': properties});
   }
@@ -87,7 +86,7 @@ class MixpanelAPI {
   ///
   /// See native [Mixpanel.registerSuperPropertiesOnce](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#registerSuperPropertiesOnce-org.json.JSONObject-)
   /// for more information.
-  void registerSuperPropertiesOnce([Map<String, dynamic> properties]) {
+  void registerSuperPropertiesOnce([Map<String, dynamic> properties = const {}]) {
     _channel.invokeMethod<void>('registerSuperPropertiesOnce',
         <String, dynamic>{'properties': properties});
   }
@@ -97,7 +96,7 @@ class MixpanelAPI {
   ///
   /// See native [Mixpanel.clearSuperProperties](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#clearSuperProperties--)
   /// for more information.
-  void clearSuperProperties([Map<String, dynamic> properties]) {
+  void clearSuperProperties([Map<String, dynamic> properties = const {}]) {
     _channel.invokeMethod<void>('clearSuperProperties');
   }
 
@@ -109,7 +108,7 @@ class MixpanelAPI {
   Future<Map<String, String>> getDeviceInfo() async {
     var result = await _channel.invokeMethod<Map>('getDeviceInfo');
     var devInfo = <String, String>{};
-    for (dynamic key in result.keys) {
+    for (dynamic key in result!.keys) {
       devInfo[key as String] = result[key] as String;
     }
     return devInfo;
@@ -117,12 +116,14 @@ class MixpanelAPI {
 
   ///
   /// Returns the string id currently being used to uniquely identify the user
-  /// associated with events sent using [track].
+  /// associated with events sent using [track], or returns [invalidDistinctId]
+  /// if the  native method returns null.
   ///
   /// See native [Mixpanel.getDistinctId](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#getDistinctId--)
   /// for more information.
   Future<String> getDistinctId() async {
-    return await _channel.invokeMethod<String>('getDistinctId');
+    return await _channel.invokeMethod<String>('getDistinctId')
+        ?? invalidDistinctId;
   }
 
   ///
@@ -334,7 +335,7 @@ class People {
   /// revenue analytics to see which products are generating the most revenue.
   /// See native [Mixpanel.reset](http://mixpanel.github.io/mixpanel-android/com/mixpanel/android/mpmetrics/MixpanelAPI.html#reset--)
   /// for more information.
-  void trackCharge(double ammount, {Map<String, dynamic> properties}) {
+  void trackCharge(double ammount, {Map<String, dynamic> properties = const {}}) {
     _channel.invokeMapMethod('people', {
       'method': 'trackCharge',
       'params': {'ammount': ammount, 'properties': properties},
